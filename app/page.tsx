@@ -189,7 +189,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
+ <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
@@ -197,8 +197,17 @@ export default function AboutPage() {
             <div className="grid grid-cols-3 gap-6 md:gap-8 perspective-1000">
               {techStack.map((tech, index) => {
                 const isFeatured = tech.featured
-                const scale = isFeatured ? 1 + scrollProgress * 2.5 : 1 - scrollProgress * 0.5
-                const opacity = isFeatured ? 1 : 1 - scrollProgress * 0.8
+                // Điều chỉnh scale ban đầu là 1 cho tất cả các thẻ
+                const scale = isFeatured 
+                  ? 1 + scrollProgress * 3 // Phóng to lên 4 lần (1 + 3)
+                  : 1 - scrollProgress * 0.5 
+                
+                // Điều chỉnh opacity ban đầu là 1 cho tất cả các thẻ
+                const opacity = isFeatured 
+                  ? 1 
+                  : 1 - scrollProgress * 1.5 // Mờ nhanh hơn
+
+                // Điều chỉnh zIndex để thẻ nổi bật luôn ở trên cùng
                 const zIndex = isFeatured ? 50 : 10 - index
 
                 return (
