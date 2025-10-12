@@ -1,6 +1,6 @@
 import { blogPosts } from "@/lib/blog-posts"
 import { notFound } from "next/navigation"
-import { Calendar, Clock, ArrowLeft } from "lucide-react"
+import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react"
 import Link from "next/link"
 import { Card } from "@/components/ui/card"
 
@@ -130,90 +130,145 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   const content = blogContent[params.slug]
 
+  const relatedPosts = blogPosts.filter((p) => p.category === post.category && p.id !== post.id).slice(0, 3)
+
   return (
-    <main className="min-h-screen">
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Quay lại Blog
-        </Link>
-
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <span
-              className={`px-3 py-1 rounded-full text-sm font-medium ${
-                post.category === "Java" ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"
-              }`}
-            >
-              {post.category}
-            </span>
-          </div>
-
-          <h1 className="text-4xl font-bold mb-4 text-balance">{post.title}</h1>
-
-          <div className="flex items-center gap-4 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              <span>{new Date(post.date).toLocaleDateString("vi-VN")}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4" />
-              <span>{post.readTime}</span>
-            </div>
-          </div>
-        </div>
-
-        <Card className="p-8 md:p-12">
-          <div className="prose prose-lg max-w-none">
-            {content.content.map((paragraph, index) => {
-              if (paragraph.startsWith("## ")) {
-                return (
-                  <h2 key={index} className="text-2xl font-bold mt-8 mb-4 text-foreground">
-                    {paragraph.replace("## ", "")}
-                  </h2>
-                )
-              } else if (paragraph.startsWith("### ")) {
-                return (
-                  <h3 key={index} className="text-xl font-semibold mt-6 mb-3 text-foreground">
-                    {paragraph.replace("### ", "")}
-                  </h3>
-                )
-              } else if (paragraph.includes("```")) {
-                const code = paragraph.split("```")[1]
-                return (
-                  <pre key={index} className="bg-muted p-4 rounded-lg overflow-x-auto my-4">
-                    <code className="text-sm font-mono">{code}</code>
-                  </pre>
-                )
-              } else if (paragraph.startsWith("**") || paragraph.includes("\n-")) {
-                return (
-                  <div key={index} className="my-4 text-foreground leading-relaxed whitespace-pre-line">
-                    {paragraph}
-                  </div>
-                )
-              } else {
-                return (
-                  <p key={index} className="mb-4 text-foreground leading-relaxed">
-                    {paragraph}
-                  </p>
-                )
-              }
-            })}
-          </div>
-        </Card>
-
-        <div className="mt-12 text-center">
+    <main className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="relative py-16 overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
-            className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group"
           >
-            Xem thêm bài viết
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Blog
           </Link>
+
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <span
+                className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                  post.category === "Java" ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"
+                }`}
+              >
+                {post.category}
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">{post.title}</h1>
+
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex items-center gap-6 text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  <span>{new Date(post.date).toLocaleDateString("vi-VN")}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  <span>{post.readTime}</span>
+                </div>
+              </div>
+
+              <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors">
+                <Share2 className="w-4 h-4" />
+                <span className="font-medium">Share</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Article Content */}
+      <article className="py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="p-8 md:p-12 shadow-xl">
+            <div className="prose prose-lg max-w-none">
+              {content.content.map((paragraph, index) => {
+                if (paragraph.startsWith("## ")) {
+                  return (
+                    <h2 key={index} className="text-3xl font-bold mt-12 mb-6 text-foreground first:mt-0">
+                      {paragraph.replace("## ", "")}
+                    </h2>
+                  )
+                } else if (paragraph.startsWith("### ")) {
+                  return (
+                    <h3 key={index} className="text-2xl font-semibold mt-8 mb-4 text-foreground">
+                      {paragraph.replace("### ", "")}
+                    </h3>
+                  )
+                } else if (paragraph.includes("```")) {
+                  const code = paragraph.split("```")[1]
+                  return (
+                    <pre key={index} className="bg-muted p-6 rounded-lg overflow-x-auto my-6 border border-border">
+                      <code className="text-sm font-mono">{code}</code>
+                    </pre>
+                  )
+                } else if (paragraph.startsWith("**") || paragraph.includes("\n-")) {
+                  return (
+                    <div key={index} className="my-6 text-foreground leading-relaxed whitespace-pre-line text-lg">
+                      {paragraph}
+                    </div>
+                  )
+                } else {
+                  return (
+                    <p key={index} className="mb-6 text-foreground leading-relaxed text-lg">
+                      {paragraph}
+                    </p>
+                  )
+                }
+              })}
+            </div>
+          </Card>
         </div>
       </article>
+
+      {/* Related Posts */}
+      {relatedPosts.length > 0 && (
+        <section className="py-16 bg-secondary/30">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold mb-8 text-center">Related Articles</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <Link key={relatedPost.id} href={`/blog/${relatedPost.id}`}>
+                  <Card className="group relative overflow-hidden h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="relative p-6">
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 ${
+                          relatedPost.category === "Java" ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"
+                        }`}
+                      >
+                        {relatedPost.category}
+                      </span>
+                      <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                        {relatedPost.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2">{relatedPost.excerpt}</p>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Explore More Articles</h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Discover more insights on network programming with Java and JavaScript
+          </p>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
+          >
+            View All Posts
+            <ArrowLeft className="w-5 h-5 rotate-180" />
+          </Link>
+        </div>
+      </section>
     </main>
   )
 }

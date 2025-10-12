@@ -23,7 +23,15 @@ export function Navigation() {
                 pathname === "/" ? "text-primary" : "text-muted-foreground"
               }`}
             >
-              Trang chủ
+              About Me
+            </Link>
+            <Link
+              href="/expertise"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/expertise" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              Expertise
             </Link>
             <Link
               href="/blog"
@@ -32,6 +40,14 @@ export function Navigation() {
               }`}
             >
               Blog
+            </Link>
+            <Link
+              href="/contact"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/contact" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              Contact With Me <span className="text-red-500">&lt;3</span>
             </Link>
           </div>
         </div>
