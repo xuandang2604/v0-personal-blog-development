@@ -6,58 +6,6 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Mail, Facebook, Instagram } from "lucide-react"
 import { useState } from "react"
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Float, Text3D, Center } from "@react-three/drei"
-
-function FloatingCode() {
-  return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-      <Center>
-        <Text3D
-          font="/fonts/Inter_Bold.json"
-          size={0.5}
-          height={0.2}
-          curveSegments={12}
-          bevelEnabled
-          bevelThickness={0.02}
-          bevelSize={0.02}
-          bevelOffset={0}
-          bevelSegments={5}
-        >
-          {"</>"}
-          <meshNormalMaterial />
-        </Text3D>
-      </Center>
-    </Float>
-  )
-}
-
-function FloatingShapes() {
-  return (
-    <>
-      <Float speed={1.5} rotationIntensity={1} floatIntensity={0.5} position={[-2, 1, 0]}>
-        <mesh>
-          <boxGeometry args={[0.8, 0.8, 0.8]} />
-          <meshStandardMaterial color="#6366f1" />
-        </mesh>
-      </Float>
-
-      <Float speed={2} rotationIntensity={1} floatIntensity={0.7} position={[2, -1, 0]}>
-        <mesh>
-          <sphereGeometry args={[0.5, 32, 32]} />
-          <meshStandardMaterial color="#14b8a6" />
-        </mesh>
-      </Float>
-
-      <Float speed={1.8} rotationIntensity={0.8} floatIntensity={0.6} position={[0, -2, -1]}>
-        <mesh>
-          <torusGeometry args={[0.6, 0.2, 16, 100]} />
-          <meshStandardMaterial color="#8b5cf6" />
-        </mesh>
-      </Float>
-    </>
-  )
-}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -72,14 +20,12 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
     setIsSubmitting(false)
     setSubmitStatus("success")
     setFormData({ name: "", email: "", message: "" })
 
-    // Reset status after 3 seconds
     setTimeout(() => setSubmitStatus("idle"), 3000)
   }
 
@@ -92,7 +38,6 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -108,11 +53,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Form & 3D Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Side - Contact Form */}
             <div className="order-2 lg:order-1">
               <Card className="p-8 shadow-2xl">
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -179,7 +122,6 @@ export default function ContactPage() {
                   )}
                 </form>
 
-                {/* Contact Info */}
                 <div className="mt-8 pt-8 border-t border-border">
                   <h3 className="font-semibold mb-4">Hoặc liên hệ qua:</h3>
                   <div className="space-y-3">
@@ -191,62 +133,56 @@ export default function ContactPage() {
                       <span>contact@example.com</span>
                     </a>
                     <div className="flex gap-3 pt-2">
-                      <a
-                        href="https://github.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
-                      >
-                        <Github className="w-5 h-5 text-primary" />
-                      </a>
-                      <a
-                        href="https://linkedin.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
-                      >
-                        <Linkedin className="w-5 h-5 text-primary" />
-                      </a>
-                      <a
-                        href="https://facebook.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
-                      >
-                        <Facebook className="w-5 h-5 text-primary" />
-                      </a>
-                      <a
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
-                      >
-                        <Instagram className="w-5 h-5 text-primary" />
-                      </a>
+                      {[
+                        { icon: Github, href: "https://github.com" },
+                        { icon: Linkedin, href: "https://linkedin.com" },
+                        { icon: Facebook, href: "https://facebook.com" },
+                        { icon: Instagram, href: "https://instagram.com" },
+                      ].map((social, i) => (
+                        <a
+                          key={i}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
+                        >
+                          <social.icon className="w-5 h-5 text-primary" />
+                        </a>
+                      ))}
                     </div>
                   </div>
                 </div>
               </Card>
             </div>
 
-            {/* Right Side - 3D Element */}
             <div className="order-1 lg:order-2 h-[500px] lg:h-[700px]">
-              <Card className="w-full h-full overflow-hidden shadow-2xl">
-                <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
-                  <ambientLight intensity={0.5} />
-                  <pointLight position={[10, 10, 10]} intensity={1} />
-                  <pointLight position={[-10, -10, -10]} intensity={0.5} color="#14b8a6" />
-                  <FloatingCode />
-                  <FloatingShapes />
-                  <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-                </Canvas>
+              <Card className="w-full h-full overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center perspective-1000">
+                <div className="relative w-64 h-64">
+                  <div className="absolute inset-0 flex items-center justify-center animate-float">
+                    <div className="text-9xl font-bold bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
+                      {"</>"}
+                    </div>
+                  </div>
+
+                  <div
+                    className="absolute top-0 left-0 w-20 h-20 bg-primary/20 rounded-lg animate-float"
+                    style={{ animationDelay: "0s", animationDuration: "3s" }}
+                  />
+                  <div
+                    className="absolute bottom-0 right-0 w-16 h-16 bg-accent/20 rounded-full animate-float"
+                    style={{ animationDelay: "1s", animationDuration: "4s" }}
+                  />
+                  <div
+                    className="absolute top-1/2 right-0 w-12 h-12 bg-primary/20 rounded-full animate-float"
+                    style={{ animationDelay: "0.5s", animationDuration: "3.5s" }}
+                  />
+                </div>
               </Card>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Additional Info Section */}
       <section className="py-16 bg-secondary/30">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-6">Sẵn sàng hợp tác</h2>
