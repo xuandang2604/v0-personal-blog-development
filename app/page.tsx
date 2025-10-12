@@ -27,7 +27,6 @@ export default function AboutPage() {
         const sectionHeight = techStackRef.current.offsetHeight
         const viewportHeight = window.innerHeight
 
-        // Calculate progress through the section
         const scrolled = -rect.top
         const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - viewportHeight)))
         setScrollProgress(progress)
@@ -76,6 +75,7 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-background">
+      {/* Hero Section with Author Info */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
@@ -99,6 +99,7 @@ export default function AboutPage() {
 
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-10 gap-12 items-center">
+            {/* Left: Author Info (4 columns) */}
             <div className="lg:col-span-4 space-y-8 animate-fade-in-up">
               <div className="inline-block">
                 <div className="relative w-40 h-40">
@@ -164,6 +165,7 @@ export default function AboutPage() {
               </div>
             </div>
 
+            {/* Right: Video Background (6 columns) */}
             <div className="lg:col-span-6 relative h-[500px] lg:h-[600px]">
               <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
                 <video autoPlay loop muted playsInline className="w-full h-full object-cover">
@@ -189,78 +191,59 @@ export default function AboutPage() {
         </div>
       </section>
 
- <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
+      <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
           <div className="relative w-full max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-3 gap-6 md:gap-8 perspective-1000">
-              <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
+              {techStack.map((tech, index) => {
+                const isFeatured = tech.featured
+                const initialScale = 0.6
+                const zoomFactor = 3
 
-        <div className="relative w-full max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-3 gap-6 md:gap-8 perspective-1000">
-            {techStack.map((tech, index) => {
-              const isFeatured = tech.featured;
+                const scale = isFeatured ? initialScale + scrollProgress * zoomFactor : initialScale
+                const opacity = isFeatured ? 1 : 1 - scrollProgress * 2.5
+                const zIndex = isFeatured ? 50 : 10 - index
 
-              // Điều chỉnh scale ban đầu để tất cả các thẻ đều nhỏ hơn, vừa vặn khung hình
-              // Khi scrollProgress = 0, scale_base = 0.6 (hoặc giá trị bạn thấy phù hợp để 9 thẻ vừa màn hình)
-              // Thẻ featured sẽ tăng từ 0.6 lên (0.6 + 0.4 * 3) = 1.8 (hoặc giá trị lớn hơn tùy ý)
-              // Các thẻ khác sẽ giữ nguyên 0.6
-              const initialScale = 0.6; // Đặt scale ban đầu nhỏ hơn để tất cả thẻ hiển thị
-              const zoomFactor = 3; // Tỷ lệ phóng to cho thẻ featured
-
-              const scale = isFeatured 
-                ? initialScale + scrollProgress * zoomFactor // Phóng to từ initialScale
-                : initialScale; // Giữ nguyên kích thước ban đầu nhỏ hơn
-
-              // Điều chỉnh opacity ban đầu là 1 cho tất cả các thẻ
-              const opacity = isFeatured 
-                ? 1 
-                : 1 - scrollProgress * 2.5; // Mờ nhanh hơn (tăng hệ số để mờ nhanh hơn)
-
-              // Điều chỉnh zIndex để thẻ nổi bật luôn ở trên cùng
-              const zIndex = isFeatured ? 50 : 10 - index;
-
-              return (
-                <div
-                  key={tech.name}
-                  className="relative"
-                  style={{
-                    // Dùng scrollProgress để điều khiển translateZ, nhưng scale ban đầu được đặt trước
-                    transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 100 : -scrollProgress * 50}px)`,
-                    opacity: opacity,
-                    zIndex: zIndex,
-                    transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
-                  }}
-                >
-                  <Card
-                    className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-6 ${isFeatured ? "shadow-2xl shadow-primary/50" : "hover:shadow-xl"} transition-all duration-300`}
+                return (
+                  <div
+                    key={tech.name}
+                    className="relative"
+                    style={{
+                      transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 100 : -scrollProgress * 50}px)`,
+                      opacity: opacity,
+                      zIndex: zIndex,
+                      transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+                    }}
                   >
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
-                    />
-                    <img
-                      src={tech.icon || "/placeholder.svg"}
-                      alt={tech.name}
-                      className="w-16 h-16 md:w-20 md:h-20 object-contain mb-3 transform group-hover:scale-110 transition-transform"
-                    />
-                    <h3 className={`font-bold text-center ${isFeatured ? "text-primary text-lg" : "text-sm"}`}>
-                      {tech.name}
-                    </h3>
-                    {isFeatured && scrollProgress > 0.5 && (
-                      <p className="text-xs text-center text-muted-foreground mt-2 animate-fade-in-up">Featured</p>
-                    )}
-                  </Card>
-                </div>
-              );
-            })}
+                    <Card
+                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-6 ${isFeatured ? "shadow-2xl shadow-primary/50" : "hover:shadow-xl"} transition-all duration-300`}
+                    >
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
+                      />
+                      <img
+                        src={tech.icon || "/placeholder.svg"}
+                        alt={tech.name}
+                        className="w-16 h-16 md:w-20 md:h-20 object-contain mb-3 transform group-hover:scale-110 transition-transform"
+                      />
+                      <h3 className={`font-bold text-center ${isFeatured ? "text-primary text-lg" : "text-sm"}`}>
+                        {tech.name}
+                      </h3>
+                      {isFeatured && scrollProgress > 0.5 && (
+                        <p className="text-xs text-center text-muted-foreground mt-2 animate-fade-in-up">Featured</p>
+                      )}
+                    </Card>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
+      {/* Work Skills Section */}
       <section className="py-16 bg-secondary/30">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -311,6 +294,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Tech Logos Scrolling Section */}
       <section className="py-8 bg-background overflow-hidden">
         <div className="relative">
           <div className="flex animate-scroll-left gap-12 items-center">
@@ -326,6 +310,7 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Professional Experience Section */}
       <section className="py-24 bg-background">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
