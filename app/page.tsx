@@ -195,57 +195,71 @@ export default function AboutPage() {
 
           <div className="relative w-full max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-3 gap-6 md:gap-8 perspective-1000">
-              {techStack.map((tech, index) => {
-                const isFeatured = tech.featured
-                // Điều chỉnh scale ban đầu là 1 cho tất cả các thẻ
-                const scale = isFeatured 
-                  ? 1 + scrollProgress * 3 // Phóng to lên 4 lần (1 + 3)
-                  : 1 - scrollProgress * 0.5 
-                
-                // Điều chỉnh opacity ban đầu là 1 cho tất cả các thẻ
-                const opacity = isFeatured 
-                  ? 1 
-                  : 1 - scrollProgress * 1.5 // Mờ nhanh hơn
+              <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
+      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
-                // Điều chỉnh zIndex để thẻ nổi bật luôn ở trên cùng
-                const zIndex = isFeatured ? 50 : 10 - index
+        <div className="relative w-full max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-3 gap-6 md:gap-8 perspective-1000">
+            {techStack.map((tech, index) => {
+              const isFeatured = tech.featured;
 
-                return (
-                  <div
-                    key={tech.name}
-                    className="relative"
-                    style={{
-                      transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 100 : -scrollProgress * 50}px)`,
-                      opacity: opacity,
-                      zIndex: zIndex,
-                      transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
-                    }}
+              // Điều chỉnh scale ban đầu để tất cả các thẻ đều nhỏ hơn, vừa vặn khung hình
+              // Khi scrollProgress = 0, scale_base = 0.6 (hoặc giá trị bạn thấy phù hợp để 9 thẻ vừa màn hình)
+              // Thẻ featured sẽ tăng từ 0.6 lên (0.6 + 0.4 * 3) = 1.8 (hoặc giá trị lớn hơn tùy ý)
+              // Các thẻ khác sẽ giữ nguyên 0.6
+              const initialScale = 0.6; // Đặt scale ban đầu nhỏ hơn để tất cả thẻ hiển thị
+              const zoomFactor = 3; // Tỷ lệ phóng to cho thẻ featured
+
+              const scale = isFeatured 
+                ? initialScale + scrollProgress * zoomFactor // Phóng to từ initialScale
+                : initialScale; // Giữ nguyên kích thước ban đầu nhỏ hơn
+
+              // Điều chỉnh opacity ban đầu là 1 cho tất cả các thẻ
+              const opacity = isFeatured 
+                ? 1 
+                : 1 - scrollProgress * 2.5; // Mờ nhanh hơn (tăng hệ số để mờ nhanh hơn)
+
+              // Điều chỉnh zIndex để thẻ nổi bật luôn ở trên cùng
+              const zIndex = isFeatured ? 50 : 10 - index;
+
+              return (
+                <div
+                  key={tech.name}
+                  className="relative"
+                  style={{
+                    // Dùng scrollProgress để điều khiển translateZ, nhưng scale ban đầu được đặt trước
+                    transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 100 : -scrollProgress * 50}px)`,
+                    opacity: opacity,
+                    zIndex: zIndex,
+                    transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+                  }}
+                >
+                  <Card
+                    className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-6 ${isFeatured ? "shadow-2xl shadow-primary/50" : "hover:shadow-xl"} transition-all duration-300`}
                   >
-                    <Card
-                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-6 ${isFeatured ? "shadow-2xl shadow-primary/50" : "hover:shadow-xl"} transition-all duration-300`}
-                    >
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
-                      />
-                      <img
-                        src={tech.icon || "/placeholder.svg"}
-                        alt={tech.name}
-                        className="w-16 h-16 md:w-20 md:h-20 object-contain mb-3 transform group-hover:scale-110 transition-transform"
-                      />
-                      <h3 className={`font-bold text-center ${isFeatured ? "text-primary text-lg" : "text-sm"}`}>
-                        {tech.name}
-                      </h3>
-                      {isFeatured && scrollProgress > 0.5 && (
-                        <p className="text-xs text-center text-muted-foreground mt-2 animate-fade-in-up">Featured</p>
-                      )}
-                    </Card>
-                  </div>
-                )
-              })}
-            </div>
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
+                    />
+                    <img
+                      src={tech.icon || "/placeholder.svg"}
+                      alt={tech.name}
+                      className="w-16 h-16 md:w-20 md:h-20 object-contain mb-3 transform group-hover:scale-110 transition-transform"
+                    />
+                    <h3 className={`font-bold text-center ${isFeatured ? "text-primary text-lg" : "text-sm"}`}>
+                      {tech.name}
+                    </h3>
+                    {isFeatured && scrollProgress > 0.5 && (
+                      <p className="text-xs text-center text-muted-foreground mt-2 animate-fade-in-up">Featured</p>
+                    )}
+                  </Card>
+                </div>
+              );
+            })}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <section className="py-16 bg-secondary/30">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
