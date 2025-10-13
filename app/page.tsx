@@ -14,40 +14,37 @@ export default function AboutPage() {
   const techStackRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * 15) // 15 total cards
+    const randomIndex = Math.floor(Math.random() * 9)
     setFeaturedIndex(randomIndex)
   }, [])
 
   useEffect(() => {
-    const playAudio = () => {
+    const playAudio = async () => {
       if (audioRef.current) {
-        audioRef.current
-          .play()
-          .then(() => {
-            setIsPlaying(true)
-          })
-          .catch(() => {
-            setIsPlaying(false)
-          })
+        try {
+          await audioRef.current.play()
+          setIsPlaying(true)
+        } catch (error) {
+          setIsPlaying(false)
+        }
       }
     }
 
-    // Try to play immediately
-    playAudio()
-
-    // Fallback: play on first user interaction
     const handleInteraction = () => {
       playAudio()
-      document.removeEventListener("click", handleInteraction)
-      document.removeEventListener("scroll", handleInteraction)
+      document.removeEventListener("click", handleInteraction, { capture: true })
+      document.removeEventListener("touchstart", handleInteraction, { capture: true })
     }
 
-    document.addEventListener("click", handleInteraction)
-    document.addEventListener("scroll", handleInteraction)
+    document.addEventListener("click", handleInteraction, { capture: true })
+    document.addEventListener("touchstart", handleInteraction, { capture: true })
 
     return () => {
-      document.removeEventListener("click", handleInteraction)
-      document.removeEventListener("scroll", handleInteraction)
+      document.removeEventListener("click", handleInteraction, { capture: true })
+      document.removeEventListener("touchstart", handleInteraction, { capture: true })
+      if (audioRef.current) {
+        audioRef.current.pause()
+      }
     }
   }, [])
 
@@ -73,28 +70,23 @@ export default function AboutPage() {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause()
+        setIsPlaying(false)
       } else {
-        audioRef.current.play()
+        audioRef.current.play().catch(() => {})
+        setIsPlaying(true)
       }
-      setIsPlaying(!isPlaying)
     }
   }
 
   const techStack = [
     { name: "Python", icon: "/icons/python.jpg" },
     { name: "C#", icon: "/icons/csharp.jpg" },
+    { name: "Java", icon: "/icons/java.jpg" },
+    { name: "JavaScript", icon: "/icons/javascript.png" },
     { name: "TypeScript", icon: "/icons/typescript.jpg" },
     { name: "React", icon: "/icons/react.jpg" },
     { name: "Node.js", icon: "/icons/nodejs.jpg" },
     { name: "Go", icon: "/icons/go.jpg" },
-    { name: "Java", icon: "/icons/java.jpg" },
-    { name: "JavaScript", icon: "/icons/javascript.png" },
-    { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
-    { name: "Ruby", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" },
-    { name: "Swift", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
-    { name: "Kotlin", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
-    { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-    { name: "Kubernetes", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
     { name: "Rust", icon: "/icons/rust.jpg" },
   ]
 
@@ -112,9 +104,10 @@ export default function AboutPage() {
     { name: "Oracle", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" },
   ]
 
+  const centerIndex = 4 // Middle position in 3x3 grid
+
   return (
     <main className="min-h-screen bg-background">
-      {/* Hero Section with Author Info and Video Background */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
           <video ref={videoRef} autoPlay loop muted playsInline className="w-full h-full object-cover">
@@ -123,7 +116,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/40" />
         </div>
 
-        <audio ref={audioRef} loop>
+        <audio ref={audioRef} loop preload="auto">
           <source src="https://cdn.pixabay.com/audio/2022/05/13/audio_2f6c9b1e5f.mp3" type="audio/mpeg" />
         </audio>
 
@@ -141,7 +134,6 @@ export default function AboutPage() {
 
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-10 gap-12 items-center">
-            {/* Left: Author Info (4 columns) */}
             <div className="lg:col-span-4 space-y-8 animate-fade-in-up">
               <div className="inline-block">
                 <div className="relative w-40 h-40">
@@ -223,32 +215,41 @@ export default function AboutPage() {
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
-          <div className="relative w-full max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-5 gap-2 md:gap-3">
+          <div className="relative w-full max-w-5xl mx-auto px-4">
+            <div className="grid grid-cols-3 gap-4 md:gap-6">
               {techStack.map((tech, index) => {
                 const isFeatured = index === featuredIndex
-                const initialScale = 0.7 // Smaller initial size
-                const zoomFactor = 4 // Stronger zoom effect
+                const initialScale = 0.5 // Much smaller initial size
+                const zoomFactor = 5 // Strong zoom effect
 
                 const scale = isFeatured
                   ? initialScale + scrollProgress * zoomFactor
-                  : initialScale - scrollProgress * 0.3
+                  : initialScale - scrollProgress * 0.4
                 const opacity = isFeatured ? 1 : Math.max(0, 1 - scrollProgress * 3)
-                const zIndex = isFeatured ? 50 : 10 - index
+                const zIndex = isFeatured ? 50 : 10 - Math.abs(index - featuredIndex)
+
+                let gridColumn = ""
+                let gridRow = ""
+                if (isFeatured && scrollProgress > 0.3) {
+                  gridColumn = "2"
+                  gridRow = "2"
+                }
 
                 return (
                   <div
                     key={tech.name}
-                    className="relative"
+                    className="relative flex items-center justify-center"
                     style={{
                       transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 150 : -scrollProgress * 80}px)`,
                       opacity: opacity,
                       zIndex: zIndex,
+                      gridColumn: gridColumn,
+                      gridRow: gridRow,
                       transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
                     }}
                   >
                     <Card
-                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-2 md:p-3 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
+                      className={`group relative overflow-hidden aspect-square w-full flex flex-col items-center justify-center p-4 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
                     >
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
@@ -256,14 +257,14 @@ export default function AboutPage() {
                       <img
                         src={tech.icon || "/placeholder.svg"}
                         alt={tech.name}
-                        className="w-8 h-8 md:w-12 md:h-12 object-contain mb-1 transform group-hover:scale-110 transition-transform"
+                        className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 transform group-hover:scale-110 transition-transform"
                       />
-                      <h3 className={`font-bold text-center text-xs ${isFeatured ? "text-primary" : ""}`}>
+                      <h3 className={`font-bold text-center text-sm md:text-base ${isFeatured ? "text-primary" : ""}`}>
                         {tech.name}
                       </h3>
                       {isFeatured && scrollProgress > 0.6 && (
-                        <div className="absolute top-1 right-1">
-                          <span className="px-2 py-0.5 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
+                        <div className="absolute top-2 right-2">
+                          <span className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
                             Featured
                           </span>
                         </div>
@@ -352,7 +353,6 @@ export default function AboutPage() {
           </div>
 
           <div className="relative">
-            {/* Center vertical line */}
             <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary transform -translate-x-1/2 hidden md:block" />
 
             <div className="space-y-16">
@@ -427,7 +427,6 @@ export default function AboutPage() {
                   key={i}
                   className={`relative ${exp.side === "right" ? "md:ml-auto md:pl-8" : "md:mr-auto md:pr-8"} md:w-1/2`}
                 >
-                  {/* Timeline dot */}
                   <div
                     className={`absolute top-8 ${exp.side === "right" ? "md:-left-4" : "md:-right-4"} left-0 md:left-auto w-8 h-8 rounded-full bg-gradient-to-br ${exp.color} flex items-center justify-center text-white font-bold text-sm shadow-lg z-10 border-4 border-background`}
                   >

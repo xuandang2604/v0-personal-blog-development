@@ -203,12 +203,22 @@ export default function ExpertisePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
               {[
                 { name: "React", icon: "/icons/react.jpg", desc: "Modern UI" },
                 { name: "Python", icon: "/icons/python.jpg", desc: "Scripting" },
                 { name: "Git", icon: "/git-logo.png", desc: "Version Control" },
                 { name: "C#", icon: "/icons/csharp.jpg", desc: ".NET Development" },
+                {
+                  name: "Docker",
+                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+                  desc: "Containers",
+                },
+                {
+                  name: "MongoDB",
+                  icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+                  desc: "NoSQL DB",
+                },
               ].map((skill, index) => (
                 <Card
                   key={index}
