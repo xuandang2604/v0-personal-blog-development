@@ -101,7 +101,9 @@ export default function BlogPage() {
       <section className="py-12 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center">Khám phá kỹ năng chuyên môn</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">{/* Placeholder for expertise cards */}</div>
+          <p className="text-center text-muted-foreground mb-8">
+            Tìm hiểu thêm về các kỹ năng và công nghệ tôi sử dụng
+          </p>
         </div>
       </section>
     </main>

@@ -10,30 +10,30 @@ export default function ExpertisePage() {
 
   const mainExpertise = [
     {
-      title: "Java Network Programming",
+      title: "Lập Trình Mạng Java",
       icon: "/icons/java.jpg",
       gradient: "from-orange-500 via-red-500 to-pink-500",
       description:
-        "Expert in building robust, scalable network applications using Java's powerful networking APIs and multithreading capabilities.",
+        "Chuyên gia xây dựng ứng dụng mạng mạnh mẽ, có khả năng mở rộng sử dụng API mạng mạnh mẽ của Java và khả năng đa luồng.",
       skills: [
-        "Socket Programming (TCP/UDP)",
-        "Multithreaded Server Architecture",
-        "Java NIO for High-Performance I/O",
+        "Lập trình Socket (TCP/UDP)",
+        "Kiến trúc Server đa luồng",
+        "Java NIO cho I/O hiệu suất cao",
         "HTTP Clients & RESTful Services",
-        "Network Protocol Implementation",
+        "Triển khai giao thức mạng",
       ],
-      tags: ["Socket API", "TCP/UDP", "Multithreading", "Java NIO", "Concurrency"],
+      tags: ["Socket API", "TCP/UDP", "Đa luồng", "Java NIO", "Concurrency"],
     },
     {
       title: "TypeScript & Node.js",
       icon: "/icons/typescript.jpg",
       gradient: "from-blue-500 via-cyan-500 to-teal-500",
       description:
-        "Proficient in modern TypeScript and Node.js ecosystem for building type-safe, real-time, event-driven network applications.",
+        "Thành thạo TypeScript và hệ sinh thái Node.js hiện đại để xây dựng ứng dụng mạng an toàn kiểu, thời gian thực, hướng sự kiện.",
       skills: [
-        "WebSocket Real-time Communication",
+        "Giao tiếp Real-time với WebSocket",
         "Socket.IO Bidirectional Events",
-        "RESTful API with Express.js",
+        "RESTful API với Express.js",
         "Async/Await Patterns",
         "TypeScript Type Safety",
       ],
@@ -43,27 +43,27 @@ export default function ExpertisePage() {
 
   const networkingCards = [
     {
-      title: "Socket Programming",
+      title: "Lập trình Socket",
       description:
-        "Master TCP/UDP socket programming for building robust client-server applications with reliable data transmission and connection management.",
+        "Thành thạo lập trình socket TCP/UDP để xây dựng ứng dụng client-server mạnh mẽ với truyền dữ liệu đáng tin cậy và quản lý kết nối.",
       icon: <Network className="w-12 h-12" />,
-      topics: ["TCP Sockets", "UDP Datagrams", "Client-Server Architecture", "Connection Pooling"],
+      topics: ["TCP Sockets", "UDP Datagrams", "Kiến trúc Client-Server", "Connection Pooling"],
       color: "from-blue-500 to-cyan-500",
     },
     {
-      title: "Real-time Communication",
+      title: "Giao tiếp Real-time",
       description:
-        "Implement WebSocket and Socket.IO for bidirectional, event-based communication in modern web applications with low latency.",
+        "Triển khai WebSocket và Socket.IO cho giao tiếp hai chiều, dựa trên sự kiện trong ứng dụng web hiện đại với độ trễ thấp.",
       icon: <Code2 className="w-12 h-12" />,
-      topics: ["WebSocket Protocol", "Socket.IO Events", "Broadcasting", "Room Management"],
+      topics: ["Giao thức WebSocket", "Socket.IO Events", "Broadcasting", "Quản lý Room"],
       color: "from-purple-500 to-pink-500",
     },
     {
-      title: "Distributed Systems",
+      title: "Hệ thống phân tán",
       description:
-        "Deep understanding of HTTP/HTTPS, REST APIs, and microservices architecture for building scalable distributed systems.",
+        "Hiểu sâu về HTTP/HTTPS, REST APIs và kiến trúc microservices để xây dựng hệ thống phân tán có khả năng mở rộng.",
       icon: <Server className="w-12 h-12" />,
-      topics: ["HTTP/HTTPS", "REST APIs", "Microservices", "Load Balancing"],
+      topics: ["HTTP/HTTPS", "REST APIs", "Microservices", "Cân bằng tải"],
       color: "from-orange-500 to-red-500",
     },
   ]
@@ -86,13 +86,13 @@ export default function ExpertisePage() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-              Technical Expertise
+              Chuyên Môn Kỹ Thuật
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed">
-            Specialized in <span className="text-primary font-semibold">Java Network Programming</span>,{" "}
+            Chuyên về <span className="text-primary font-semibold">Lập Trình Mạng Java</span>,{" "}
             <span className="text-accent font-semibold">TypeScript</span> &{" "}
-            <span className="text-accent font-semibold">Node.js</span> for building scalable distributed systems
+            <span className="text-accent font-semibold">Node.js</span> để xây dựng hệ thống phân tán có khả năng mở rộng
           </p>
         </div>
       </section>
@@ -161,10 +161,10 @@ export default function ExpertisePage() {
           <div className="mb-16">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Network Programming Specializations
+                Chuyên Môn Lập Trình Mạng
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Core competencies in building distributed and networked systems
+                Năng lực cốt lõi trong xây dựng hệ thống phân tán và mạng
               </p>
             </div>
 
@@ -197,18 +197,18 @@ export default function ExpertisePage() {
 
           <div className="mb-16">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">Supporting Technologies</h2>
+              <h2 className="text-4xl font-bold mb-4">Công Nghệ Hỗ Trợ</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Additional tools and frameworks for full-stack development
+                Các công cụ và framework bổ sung cho phát triển full-stack
               </p>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
               {[
-                { name: "React", icon: "/icons/react.jpg", desc: "Modern UI" },
+                { name: "React", icon: "/icons/react.jpg", desc: "Giao diện hiện đại" },
                 { name: "Python", icon: "/icons/python.jpg", desc: "Scripting" },
-                { name: "Git", icon: "/git-logo.png", desc: "Version Control" },
-                { name: "C#", icon: "/icons/csharp.jpg", desc: ".NET Development" },
+                { name: "Git", icon: "/git-logo.png", desc: "Quản lý phiên bản" },
+                { name: "C#", icon: "/icons/csharp.jpg", desc: "Phát triển .NET" },
                 {
                   name: "Docker",
                   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
@@ -241,11 +241,9 @@ export default function ExpertisePage() {
           <div>
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Certificates & Achievements
+                Chứng Chỉ & Thành Tích
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Professional certifications and recognitions
-              </p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Chứng chỉ chuyên môn và sự công nhận</p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -257,8 +255,10 @@ export default function ExpertisePage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative p-6 flex flex-col items-center justify-center h-full">
                     <Award className="w-16 h-16 text-primary mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-xl font-bold mb-2 text-center">Certificate {cert}</h3>
-                    <p className="text-muted-foreground text-center text-sm mb-4">Add your certificate details here</p>
+                    <h3 className="text-xl font-bold mb-2 text-center">Chứng chỉ {cert}</h3>
+                    <p className="text-muted-foreground text-center text-sm mb-4">
+                      Thêm chi tiết chứng chỉ của bạn tại đây
+                    </p>
                     <div className="mt-auto">
                       <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-xs font-semibold">
                         2024
@@ -276,16 +276,16 @@ export default function ExpertisePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Explore My Technical Articles
+            Khám Phá Các Bài Viết Kỹ Thuật
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Read in-depth tutorials and guides on network programming with Java, TypeScript, and Node.js
+            Đọc các hướng dẫn và bài viết chuyên sâu về lập trình mạng với Java, TypeScript và Node.js
           </p>
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-primary/50 transition-all hover:scale-105"
           >
-            View Blog Posts
+            Xem Bài Viết Blog
             <ArrowRight className="w-6 h-6" />
           </Link>
         </div>

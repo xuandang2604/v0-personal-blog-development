@@ -7,14 +7,13 @@ import { useEffect, useRef, useState } from "react"
 
 export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
-  const [featuredIndex, setFeaturedIndex] = useState(4) // Random featured card on load
+  const [featuredIndex, setFeaturedIndex] = useState(7) // Random featured card on load
   const techStackRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * 9)
+    const randomIndex = Math.floor(Math.random() * 15)
     setFeaturedIndex(randomIndex)
   }, [])
 
@@ -22,26 +21,35 @@ export default function AboutPage() {
     const playAudio = async () => {
       if (audioRef.current) {
         try {
+          audioRef.current.volume = 1 // Set volume to 30%
           await audioRef.current.play()
           setIsPlaying(true)
         } catch (error) {
+          console.log("[v0] Audio autoplay blocked, waiting for user interaction")
           setIsPlaying(false)
         }
       }
     }
 
+    // Try to play immediately
+    playAudio()
+
+    // Also set up interaction handlers
     const handleInteraction = () => {
       playAudio()
       document.removeEventListener("click", handleInteraction, { capture: true })
       document.removeEventListener("touchstart", handleInteraction, { capture: true })
+      document.removeEventListener("keydown", handleInteraction, { capture: true })
     }
 
     document.addEventListener("click", handleInteraction, { capture: true })
     document.addEventListener("touchstart", handleInteraction, { capture: true })
+    document.addEventListener("keydown", handleInteraction, { capture: true })
 
     return () => {
       document.removeEventListener("click", handleInteraction, { capture: true })
       document.removeEventListener("touchstart", handleInteraction, { capture: true })
+      document.removeEventListener("keydown", handleInteraction, { capture: true })
       if (audioRef.current) {
         audioRef.current.pause()
       }
@@ -88,6 +96,12 @@ export default function AboutPage() {
     { name: "Node.js", icon: "/icons/nodejs.jpg" },
     { name: "Go", icon: "/icons/go.jpg" },
     { name: "Rust", icon: "/icons/rust.jpg" },
+    { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+    { name: "Ruby", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" },
+    { name: "Swift", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
+    { name: "Kotlin", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
+    { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+    { name: "Dart", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
   ]
 
   const techLogos = [
@@ -104,29 +118,32 @@ export default function AboutPage() {
     { name: "Oracle", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" },
   ]
 
-  const centerIndex = 4 // Middle position in 3x3 grid
+  const centerRow = 1 // Middle row (0-indexed)
+  const centerCol = 2 // Middle column (0-indexed)
 
   return (
     <main className="min-h-screen bg-background">
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
-          <video ref={videoRef} autoPlay loop muted playsInline className="w-full h-full object-cover">
-            <source src="https://cdn.pixabay.com/video/2023/11/30/191019-890947793_large.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-100 via-orange-50 to-pink-100 dark:from-rose-950 dark:via-orange-950 dark:to-pink-950" />
+          <div className="network-animation absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/70 to-background/30" />
         </div>
 
         <audio ref={audioRef} loop preload="auto">
-          <source src="https://cdn.pixabay.com/audio/2022/05/13/audio_2f6c9b1e5f.mp3" type="audio/mpeg" />
+          <source
+            src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d1718ab41b.mp3?filename=lofi-study-112191.mp3"
+            type="audio/mpeg"
+          />
         </audio>
 
         <button
           onClick={toggleMusic}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-primary/20 backdrop-blur-sm border-2 border-primary/30 flex items-center justify-center hover:bg-primary/30 transition-all hover:scale-110 group"
-          aria-label="Toggle music"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-primary/20 backdrop-blur-sm border-2 border-primary/30 flex items-center justify-center hover:bg-primary/30 transition-all hover:scale-110 group shadow-lg shadow-primary/20"
+          aria-label="Bật/tắt nhạc nền"
         >
           {isPlaying ? (
-            <Volume2 className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
+            <Volume2 className="w-6 h-6 text-primary group-hover:scale-110 transition-transform animate-pulse" />
           ) : (
             <VolumeX className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
           )}
@@ -152,14 +169,14 @@ export default function AboutPage() {
                     Nguyễn Lê Xuân Đăng
                   </span>
                 </h1>
-                <p className="text-2xl font-semibold text-primary mb-2">Network Programming Developer</p>
-                <p className="text-lg text-muted-foreground/90">Sinh viên năm cuối | HUTECH University</p>
+                <p className="text-2xl font-semibold text-primary mb-2">Lập Trình Viên Mạng</p>
+                <p className="text-lg text-muted-foreground/90">Sinh viên năm cuối | Đại học HUTECH</p>
               </div>
 
               <p className="text-lg text-foreground/80 leading-relaxed text-balance">
                 Đam mê với lập trình mạng và công nghệ. Chuyên về{" "}
-                <span className="text-primary font-semibold">Java & JavaScript network programming</span>, luôn tìm tòi
-                học hỏi các công nghệ mới và chia sẻ kiến thức qua blog cá nhân.
+                <span className="text-primary font-semibold">lập trình mạng Java & JavaScript</span>, luôn tìm tòi học
+                hỏi các công nghệ mới và chia sẻ kiến thức qua blog cá nhân.
               </p>
 
               <div className="flex gap-4">
@@ -188,13 +205,13 @@ export default function AboutPage() {
                   href="/expertise"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-bold hover:shadow-2xl hover:shadow-primary/50 transition-all hover:scale-105"
                 >
-                  View Expertise
+                  Xem Chuyên Môn
                 </Link>
                 <Link
                   href="/blog"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary/50 text-foreground rounded-lg font-bold hover:bg-primary/10 transition-all hover:scale-105"
                 >
-                  Read Blog
+                  Đọc Blog
                 </Link>
               </div>
             </div>
@@ -215,12 +232,19 @@ export default function AboutPage() {
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
-          <div className="relative w-full max-w-5xl mx-auto px-4">
-            <div className="grid grid-cols-3 gap-4 md:gap-6">
+          <div className="relative w-full max-w-6xl mx-auto px-4">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Ngôn Ngữ Lập Trình
+              </h2>
+              <p className="text-muted-foreground mt-2">Các công nghệ tôi sử dụng</p>
+            </div>
+
+            <div className="grid grid-cols-5 gap-3 md:gap-4">
               {techStack.map((tech, index) => {
                 const isFeatured = index === featuredIndex
-                const initialScale = 0.5 // Much smaller initial size
-                const zoomFactor = 5 // Strong zoom effect
+                const initialScale = 0.7 // Smaller initial size to fit all 15 cards
+                const zoomFactor = 4
 
                 const scale = isFeatured
                   ? initialScale + scrollProgress * zoomFactor
@@ -231,8 +255,8 @@ export default function AboutPage() {
                 let gridColumn = ""
                 let gridRow = ""
                 if (isFeatured && scrollProgress > 0.3) {
-                  gridColumn = "2"
-                  gridRow = "2"
+                  gridColumn = "3" // Center column (1-indexed)
+                  gridRow = "2" // Middle row
                 }
 
                 return (
@@ -249,7 +273,7 @@ export default function AboutPage() {
                     }}
                   >
                     <Card
-                      className={`group relative overflow-hidden aspect-square w-full flex flex-col items-center justify-center p-4 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
+                      className={`group relative overflow-hidden aspect-square w-full flex flex-col items-center justify-center p-2 md:p-3 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
                     >
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
@@ -257,15 +281,15 @@ export default function AboutPage() {
                       <img
                         src={tech.icon || "/placeholder.svg"}
                         alt={tech.name}
-                        className="w-12 h-12 md:w-16 md:h-16 object-contain mb-2 transform group-hover:scale-110 transition-transform"
+                        className="w-8 h-8 md:w-12 md:h-12 object-contain mb-1 md:mb-2 transform group-hover:scale-110 transition-transform"
                       />
-                      <h3 className={`font-bold text-center text-sm md:text-base ${isFeatured ? "text-primary" : ""}`}>
+                      <h3 className={`font-bold text-center text-xs md:text-sm ${isFeatured ? "text-primary" : ""}`}>
                         {tech.name}
                       </h3>
                       {isFeatured && scrollProgress > 0.6 && (
-                        <div className="absolute top-2 right-2">
-                          <span className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
-                            Featured
+                        <div className="absolute top-1 right-1">
+                          <span className="px-2 py-0.5 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
+                            Nổi bật
                           </span>
                         </div>
                       )}
@@ -282,7 +306,7 @@ export default function AboutPage() {
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Kỹ năng làm việc
+              Kỹ Năng Làm Việc
             </h2>
             <p className="text-base text-muted-foreground max-w-2xl mx-auto">
               Những kỹ năng mềm giúp tôi làm việc hiệu quả
@@ -347,7 +371,7 @@ export default function AboutPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Professional Work Experience
+              Kinh Nghiệm Làm Việc
             </h2>
             <p className="text-lg text-muted-foreground">Hành trình học tập và phát triển của tôi</p>
           </div>
@@ -359,7 +383,7 @@ export default function AboutPage() {
               {[
                 {
                   title: "Bắt đầu học lập trình",
-                  company: "HUTECH University",
+                  company: "Đại học HUTECH",
                   period: "09/2022 - 12/2022",
                   icon: "🎓",
                   color: "from-blue-500 to-cyan-500",
@@ -372,7 +396,7 @@ export default function AboutPage() {
                 },
                 {
                   title: "Dự án Web đầu tiên",
-                  company: "HUTECH University",
+                  company: "Đại học HUTECH",
                   period: "03/2023 - 06/2023",
                   icon: "🌐",
                   color: "from-green-500 to-emerald-500",
@@ -384,16 +408,16 @@ export default function AboutPage() {
                   ],
                 },
                 {
-                  title: "Dự án Network Programming",
-                  company: "HUTECH University",
+                  title: "Dự án Lập trình Mạng",
+                  company: "Đại học HUTECH",
                   period: "09/2023 - 12/2023",
                   icon: "🔌",
                   color: "from-orange-500 to-red-500",
                   side: "left",
                   responsibilities: [
-                    "Phát triển chat application với Java Socket Programming.",
-                    "Implement multithreading để xử lý multiple clients.",
-                    "Tìm hiểu và áp dụng các network protocols (TCP/UDP).",
+                    "Phát triển ứng dụng chat với Java Socket Programming.",
+                    "Implement multithreading để xử lý nhiều client đồng thời.",
+                    "Tìm hiểu và áp dụng các giao thức mạng (TCP/UDP).",
                   ],
                 },
                 {
@@ -411,15 +435,15 @@ export default function AboutPage() {
                 },
                 {
                   title: "Dự án học phần Web nâng cao",
-                  company: "HUTECH University",
+                  company: "Đại học HUTECH",
                   period: "09/2024 - 12/2024",
                   icon: "🚀",
                   color: "from-cyan-500 to-blue-500",
                   side: "left",
                   responsibilities: [
                     "Xây dựng ứng dụng web full-stack với Node.js và MongoDB.",
-                    "Implement RESTful API và WebSocket cho real-time features.",
-                    "Áp dụng best practices trong code organization và security.",
+                    "Implement RESTful API và WebSocket cho tính năng real-time.",
+                    "Áp dụng best practices trong tổ chức code và bảo mật.",
                   ],
                 },
               ].map((exp, i) => (
@@ -452,7 +476,7 @@ export default function AboutPage() {
                       </div>
 
                       <div className={`space-y-2 mt-4 ${exp.side === "left" ? "md:text-right" : ""}`}>
-                        <p className="text-sm font-semibold text-muted-foreground italic">Responsibilities</p>
+                        <p className="text-sm font-semibold text-muted-foreground italic">Trách nhiệm</p>
                         {exp.responsibilities.map((resp, j) => (
                           <div
                             key={j}

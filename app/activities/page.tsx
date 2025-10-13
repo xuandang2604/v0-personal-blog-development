@@ -57,7 +57,7 @@ export default function ActivitiesPage() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-              Activities & Interests
+              Hoạt Động & Sở Thích
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance">
@@ -128,7 +128,7 @@ export default function ActivitiesPage() {
       <section className="py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Balance is Key
+            Cân Bằng Là Chìa Khóa
           </h2>
           <p className="text-xl text-muted-foreground leading-relaxed">
             Tôi tin rằng sự cân bằng giữa công việc, học tập và các hoạt động ngoại khóa là chìa khóa để phát triển toàn
