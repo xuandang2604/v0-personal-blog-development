@@ -92,9 +92,6 @@ const blogContent: Record<string, { content: string[] }> = {
       "Hi vọng những phân tích này sẽ giúp bạn đưa ra lựa chọn sáng suốt cho dự án của mình! Hãy tiếp tục tìm hiểu và thực hành nhé."
     ],
   },
-  "java-multithreaded-server": {
-    content: [
-      {
   "java-multithreaded-socket-programming": {
     "content": [
       "Bạn đã xây dựng được một server socket đơn giản, nhưng có một vấn đề lớn: server của bạn chỉ có thể phục vụ **một client tại một thời điểm**. Khi client đầu tiên kết nối, server sẽ bị 'đứng hình' và không thể chấp nhận bất kỳ kết nối nào khác cho đến khi client đó ngắt kết nối. Vậy làm thế nào để server có thể xử lý nhiều yêu cầu cùng lúc? Giải pháp chính là **Multithreading** – một kỹ thuật mạnh mẽ cho phép chương trình thực hiện nhiều tác vụ song song.",
@@ -126,9 +123,6 @@ const blogContent: Record<string, { content: string[] }> = {
       "3. **Xử lý exceptions đúng cách** trong các luồng con để một client lỗi không làm sập toàn bộ server.",
       "4. **Đóng tài nguyên** (`sockets`, `streams`) trong `finally` block để đảm bảo chúng được giải phóng dù có lỗi xảy ra.",
       "5. **Monitor số lượng kết nối** đang hoạt động để có kế hoạch mở rộng phù hợp."
-    ]
-  }
-}
     ],
   },
   "http-client-java": {

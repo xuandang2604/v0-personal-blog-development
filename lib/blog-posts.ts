@@ -26,7 +26,7 @@ export const blogPosts: BlogPost[] = [
     readTime: "10 phút",
   },
   {
-    id: "java-multithreaded-server",
+    id: "java-multithreaded-socket-programming",
     title: "Xây dựng Server đa luồng với Java",
     excerpt: "Hướng dẫn tạo server có khả năng xử lý nhiều client đồng thời sử dụng multithreading trong Java.",
     date: "2024-12-05",
