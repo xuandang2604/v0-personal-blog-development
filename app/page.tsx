@@ -169,7 +169,7 @@ export default function AboutPage() {
             <div className="lg:col-span-6 relative h-[500px] lg:h-[600px]">
               <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
                 <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                  <source src="https://pixabay.com/videos/binary-digital-code-matrix-numbers-29078/" type="video/mp4" />
+                  <source src="https://drive.google.com/file/d/17timsOLVb90C5-USgqneGgDIn2m3qzB2/view?usp=drive_link" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
 
