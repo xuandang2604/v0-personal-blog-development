@@ -13,12 +13,11 @@ export function Footer() {
               <span>Nguyễn Lê Xuân Đăng</span>
             </Link>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Network Programming Developer chuyên về Java & JavaScript. Chia sẻ kiến thức và kinh nghiệm qua blog cá
-              nhân.
+              Chia sẻ kiến thức và kinh nghiệm qua blog cá nhân.
             </p>
             <div className="flex gap-3">
               <a
-                href="https://github.com"
+                href="https://github.com/xuandang2604"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
@@ -36,7 +35,7 @@ export function Footer() {
                 <Linkedin className="w-5 h-5 text-primary" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://facebook.com/nguyenlexuandangdeptraitailang"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
@@ -45,7 +44,7 @@ export function Footer() {
                 <Facebook className="w-5 h-5 text-primary" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/caphedendakhongduongmoingay/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
@@ -104,9 +103,10 @@ export function Footer() {
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4" />
-                  <span>Email</span>
+                  <span>nguyenlexuandang2004@gmail.com</span>
                 </a>
               </li>
+              <li className="text-muted-foreground">+0987654321</li>
               <li className="text-muted-foreground">HUTECH University</li>
               <li className="text-muted-foreground">Ho Chi Minh City, Vietnam</li>
             </ul>

@@ -7,16 +7,47 @@ import { useEffect, useRef, useState } from "react"
 
 export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [featuredIndex, setFeaturedIndex] = useState(4) // Random featured card on load
   const techStackRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {
-        setIsPlaying(false)
-      })
-      setIsPlaying(true)
+    const randomIndex = Math.floor(Math.random() * 15) // 15 total cards
+    setFeaturedIndex(randomIndex)
+  }, [])
+
+  useEffect(() => {
+    const playAudio = () => {
+      if (audioRef.current) {
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true)
+          })
+          .catch(() => {
+            setIsPlaying(false)
+          })
+      }
+    }
+
+    // Try to play immediately
+    playAudio()
+
+    // Fallback: play on first user interaction
+    const handleInteraction = () => {
+      playAudio()
+      document.removeEventListener("click", handleInteraction)
+      document.removeEventListener("scroll", handleInteraction)
+    }
+
+    document.addEventListener("click", handleInteraction)
+    document.addEventListener("scroll", handleInteraction)
+
+    return () => {
+      document.removeEventListener("click", handleInteraction)
+      document.removeEventListener("scroll", handleInteraction)
     }
   }, [])
 
@@ -54,11 +85,17 @@ export default function AboutPage() {
     { name: "JavaScript", icon: "/icons/javascript.png" },
     { name: "Python", icon: "/icons/python.jpg" },
     { name: "C#", icon: "/icons/csharp.jpg" },
-    { name: "TypeScript", icon: "/icons/typescript.jpg", featured: true },
+    { name: "TypeScript", icon: "/icons/typescript.jpg" },
     { name: "React", icon: "/icons/react.jpg" },
     { name: "Node.js", icon: "/icons/nodejs.jpg" },
     { name: "Go", icon: "/icons/go.jpg" },
     { name: "Rust", icon: "/icons/rust.jpg" },
+    { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+    { name: "Ruby", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" },
+    { name: "Swift", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
+    { name: "Kotlin", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
+    { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+    { name: "Kubernetes", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
   ]
 
   const techLogos = [
@@ -71,19 +108,25 @@ export default function AboutPage() {
     { name: "Amazon", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
     { name: "Netflix", icon: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
     { name: "Apple", icon: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" },
+    { name: "IBM", icon: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" },
+    { name: "Oracle", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg" },
   ]
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Hero Section with Author Info */}
+      {/* Hero Section with Author Info and Video Background */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+          <video ref={videoRef} autoPlay loop muted playsInline className="w-full h-full object-cover">
+            <source src="https://cdn.pixabay.com/video/2023/11/30/191019-890947793_large.mp4" type="video/mp4" />
+          </video>
+          {/* Gradient overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/40" />
         </div>
 
-       <audio ref={audioRef} loop className="hidden">
-  <source src="https://cdn.pixabay.com/audio/2023/12/28/audio_af11b64cfb.mp3" type="audio/mpeg" />
-</audio>
+        <audio ref={audioRef} loop>
+          <source src="https://cdn.pixabay.com/audio/2022/05/13/audio_2f6c9b1e5f.mp3" type="audio/mpeg" />
+        </audio>
 
         <button
           onClick={toggleMusic}
@@ -165,18 +208,14 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Right: Video Background (6 columns) */}
+            {/* Right: Black overlay showing video content (6 columns) */}
             <div className="lg:col-span-6 relative h-[500px] lg:h-[600px]">
-              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
-                <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                  <source src="https://drive.google.com/file/d/17timsOLVb90C5-USgqneGgDIn2m3qzB2/view?usp=sharing" type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-
+              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl bg-black/40 backdrop-blur-sm border border-primary/20">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center space-y-4 p-8">
-                    <div className="text-4xl font-mono font-bold text-primary animate-pulse">{"<Code />"}</div>
-                    <p className="text-xl text-foreground/90 font-semibold">Building the Future</p>
+                    <div className="text-6xl font-mono font-bold text-primary animate-pulse">{"<Code />"}</div>
+                    <p className="text-2xl text-white font-semibold">Building the Future</p>
+                    <p className="text-lg text-white/80">with Network Programming</p>
                   </div>
                 </div>
               </div>
@@ -191,19 +230,24 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section ref={techStackRef} className="relative min-h-[300vh] bg-background">
+      <section
+        ref={techStackRef}
+        className="relative min-h-[300vh] bg-gradient-to-br from-background via-primary/5 to-accent/5"
+      >
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
           <div className="relative w-full max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-3 gap-1 md:gap-0.5 perspective-100">
+            <div className="grid grid-cols-5 gap-3 md:gap-4">
               {techStack.map((tech, index) => {
-                const isFeatured = tech.featured
-                const initialScale = 0.6
-                const zoomFactor = 3
+                const isFeatured = index === featuredIndex
+                const initialScale = 0.85 // Smaller initial size
+                const zoomFactor = 4 // Stronger zoom effect
 
-                const scale = isFeatured ? initialScale + scrollProgress * zoomFactor : initialScale
-                const opacity = isFeatured ? 1 : 1 - scrollProgress * 2.5
+                const scale = isFeatured
+                  ? initialScale + scrollProgress * zoomFactor
+                  : initialScale - scrollProgress * 0.3
+                const opacity = isFeatured ? 1 : Math.max(0, 1 - scrollProgress * 3)
                 const zIndex = isFeatured ? 50 : 10 - index
 
                 return (
@@ -211,14 +255,14 @@ export default function AboutPage() {
                     key={tech.name}
                     className="relative"
                     style={{
-                      transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 100 : -scrollProgress * 50}px)`,
+                      transform: `scale(${scale}) translateZ(${isFeatured ? scrollProgress * 150 : -scrollProgress * 80}px)`,
                       opacity: opacity,
                       zIndex: zIndex,
                       transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
                     }}
                   >
                     <Card
-                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-6 ${isFeatured ? "shadow-2xl shadow-primary/50" : "hover:shadow-xl"} transition-all duration-300`}
+                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-3 md:p-4 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
                     >
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
@@ -226,13 +270,17 @@ export default function AboutPage() {
                       <img
                         src={tech.icon || "/placeholder.svg"}
                         alt={tech.name}
-                        className="w-16 h-16 md:w-20 md:h-20 object-contain mb-3 transform group-hover:scale-110 transition-transform"
+                        className="w-10 h-10 md:w-14 md:h-14 object-contain mb-2 transform group-hover:scale-110 transition-transform"
                       />
-                      <h3 className={`font-bold text-center ${isFeatured ? "text-primary text-lg" : "text-sm"}`}>
+                      <h3 className={`font-bold text-center text-xs md:text-sm ${isFeatured ? "text-primary" : ""}`}>
                         {tech.name}
                       </h3>
-                      {isFeatured && scrollProgress > 0.5 && (
-                        <p className="text-xs text-center text-muted-foreground mt-2 animate-fade-in-up">Featured</p>
+                      {isFeatured && scrollProgress > 0.6 && (
+                        <div className="absolute top-2 right-2">
+                          <span className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
+                            Featured
+                          </span>
+                        </div>
                       )}
                     </Card>
                   </div>
@@ -243,19 +291,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Work Skills Section */}
-      <section className="py-16 bg-secondary/30">
+      <section className="py-12 bg-secondary/30">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Kỹ năng làm việc
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base text-muted-foreground max-w-2xl mx-auto">
               Những kỹ năng mềm giúp tôi làm việc hiệu quả
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {[
               {
                 title: "Tinh thần học hỏi",
@@ -283,9 +330,9 @@ export default function AboutPage() {
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-100 transition-opacity`}
                 />
-                <div className="relative p-6 text-center">
-                  <div className="text-5xl mb-4">{skill.icon}</div>
-                  <h3 className="text-xl font-bold mb-3">{skill.title}</h3>
+                <div className="relative p-5 text-center">
+                  <div className="text-4xl mb-3">{skill.icon}</div>
+                  <h3 className="text-lg font-bold mb-2">{skill.title}</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">{skill.desc}</p>
                 </div>
               </Card>
@@ -294,8 +341,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Tech Logos Scrolling Section */}
-      <section className="py-8 bg-background overflow-hidden">
+      <section className="py-6 bg-background overflow-hidden border-y border-border">
         <div className="relative">
           <div className="flex animate-scroll-left gap-12 items-center">
             {[...techLogos, ...techLogos, ...techLogos].map((logo, i) => (
@@ -303,16 +349,15 @@ export default function AboutPage() {
                 key={i}
                 className="flex-shrink-0 grayscale hover:grayscale-0 transition-all opacity-50 hover:opacity-100"
               >
-                <img src={logo.icon || "/placeholder.svg"} alt={logo.name} className="h-8 object-contain" />
+                <img src={logo.icon || "/placeholder.svg"} alt={logo.name} className="h-6 object-contain" />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Professional Experience Section */}
-      <section className="py-24 bg-background">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 bg-gradient-to-br from-background via-primary/5 to-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Professional Work Experience
@@ -321,16 +366,57 @@ export default function AboutPage() {
           </div>
 
           <div className="relative">
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary" />
+            {/* Center vertical line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary transform -translate-x-1/2 hidden md:block" />
 
-            <div className="space-y-12">
+            <div className="space-y-16">
               {[
+                {
+                  title: "Bắt đầu học lập trình",
+                  company: "HUTECH University",
+                  period: "09/2022 - 12/2022",
+                  icon: "🎓",
+                  color: "from-blue-500 to-cyan-500",
+                  side: "left",
+                  responsibilities: [
+                    "Học các ngôn ngữ lập trình cơ bản: C, C++, Java.",
+                    "Làm quen với thuật toán và cấu trúc dữ liệu.",
+                    "Tham gia các buổi workshop về lập trình.",
+                  ],
+                },
+                {
+                  title: "Dự án Web đầu tiên",
+                  company: "HUTECH University",
+                  period: "03/2023 - 06/2023",
+                  icon: "🌐",
+                  color: "from-green-500 to-emerald-500",
+                  side: "right",
+                  responsibilities: [
+                    "Xây dựng website quản lý thư viện với HTML, CSS, JavaScript.",
+                    "Học cách làm việc với database MySQL.",
+                    "Áp dụng responsive design cho mobile.",
+                  ],
+                },
+                {
+                  title: "Dự án Network Programming",
+                  company: "HUTECH University",
+                  period: "09/2023 - 12/2023",
+                  icon: "🔌",
+                  color: "from-orange-500 to-red-500",
+                  side: "left",
+                  responsibilities: [
+                    "Phát triển chat application với Java Socket Programming.",
+                    "Implement multithreading để xử lý multiple clients.",
+                    "Tìm hiểu và áp dụng các network protocols (TCP/UDP).",
+                  ],
+                },
                 {
                   title: "Thực tập sinh Frontend",
                   company: "Hostinger",
                   period: "06/2024 - 09/2024",
-                  icon: "H",
+                  icon: "💼",
                   color: "from-purple-500 to-pink-500",
+                  side: "right",
                   responsibilities: [
                     "Học và áp dụng ReactJS vào xây dựng giao diện web.",
                     "Thực hành làm việc nhóm với Git và quản lý task qua Trello.",
@@ -341,54 +427,54 @@ export default function AboutPage() {
                   title: "Dự án học phần Web nâng cao",
                   company: "HUTECH University",
                   period: "09/2024 - 12/2024",
-                  icon: "G",
+                  icon: "🚀",
                   color: "from-cyan-500 to-blue-500",
+                  side: "left",
                   responsibilities: [
                     "Xây dựng ứng dụng web full-stack với Node.js và MongoDB.",
                     "Implement RESTful API và WebSocket cho real-time features.",
                     "Áp dụng best practices trong code organization và security.",
                   ],
                 },
-                {
-                  title: "Dự án Network Programming",
-                  company: "HUTECH University",
-                  period: "03/2024 - 06/2024",
-                  icon: "N",
-                  color: "from-orange-500 to-red-500",
-                  responsibilities: [
-                    "Phát triển chat application với Java Socket Programming.",
-                    "Implement multithreading để xử lý multiple clients.",
-                    "Tìm hiểu và áp dụng các network protocols (TCP/UDP).",
-                  ],
-                },
               ].map((exp, i) => (
-                <div key={i} className="relative pl-20">
+                <div
+                  key={i}
+                  className={`relative ${exp.side === "right" ? "md:ml-auto md:pl-8" : "md:mr-auto md:pr-8"} md:w-1/2`}
+                >
+                  {/* Timeline dot */}
                   <div
-                    className={`absolute left-0 w-16 h-16 rounded-full bg-gradient-to-br ${exp.color} flex items-center justify-center text-white font-bold text-xl shadow-lg`}
+                    className={`absolute top-8 ${exp.side === "right" ? "md:-left-4" : "md:-right-4"} left-0 md:left-auto w-8 h-8 rounded-full bg-gradient-to-br ${exp.color} flex items-center justify-center text-white font-bold text-sm shadow-lg z-10 border-4 border-background`}
                   >
                     {exp.icon}
                   </div>
 
-                  <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <Card
+                    className={`group hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${exp.side === "left" ? "md:text-right" : ""}`}
+                  >
                     <div className="p-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h3 className="text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
+                      <div
+                        className={`flex items-start ${exp.side === "left" ? "md:flex-row-reverse" : "flex-row"} justify-between mb-3 gap-4`}
+                      >
+                        <div className={exp.side === "left" ? "md:text-right" : ""}>
+                          <h3 className="text-xl md:text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
                             {exp.title}
                           </h3>
-                          <p className="text-lg text-muted-foreground">{exp.company}</p>
+                          <p className="text-base text-muted-foreground font-semibold">{exp.company}</p>
                         </div>
-                        <span className="text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full">
+                        <span className="text-xs md:text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full whitespace-nowrap">
                           {exp.period}
                         </span>
                       </div>
 
-                      <div className="space-y-2 mt-4">
+                      <div className={`space-y-2 mt-4 ${exp.side === "left" ? "md:text-right" : ""}`}>
                         <p className="text-sm font-semibold text-muted-foreground italic">Responsibilities</p>
                         {exp.responsibilities.map((resp, j) => (
-                          <div key={j} className="flex items-start gap-2">
+                          <div
+                            key={j}
+                            className={`flex items-start gap-2 ${exp.side === "left" ? "md:flex-row-reverse" : ""}`}
+                          >
                             <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                            <p className="text-muted-foreground">{resp}</p>
+                            <p className="text-muted-foreground text-sm">{resp}</p>
                           </div>
                         ))}
                       </div>
