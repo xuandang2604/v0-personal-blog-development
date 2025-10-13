@@ -97,13 +97,23 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Explore expertise section */}
-      <section className="py-12 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-center">Khám phá kỹ năng chuyên môn</h2>
-          <p className="text-center text-muted-foreground mb-8">
-            Tìm hiểu thêm về các kỹ năng và công nghệ tôi sử dụng
+    
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+           Khám phá chuyên môn của tôi
+          </h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+           Tìm hiểu các công nghệ tôi đang sử dụng, các kỹ năng mà tôi đã tích lũy được qua các năm học đại học
           </p>
+          <Link
+            href="/expertise"
+            className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-primary/50 transition-all hover:scale-105"
+          >
+             Các Kỹ Năng
+            <ArrowRight className="w-6 h-6" />
+          </Link>
         </div>
       </section>
     </main>

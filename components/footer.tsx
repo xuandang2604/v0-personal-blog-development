@@ -98,14 +98,14 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="mailto:contact@example.com"
+                  href="nguyenlexuandang2004@gmail.com"
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                 >
                   <Mail className="w-4 h-4" />
                   <span>nguyenlexuandang2004@gmail.com</span>
                 </a>
               </li>
-              <li className="text-muted-foreground">+0987654321</li>
+              <li className="text-muted-foreground">0987654321</li>
               <li className="text-muted-foreground">HUTECH University</li>
               <li className="text-muted-foreground">Ho Chi Minh City, Vietnam</li>
             </ul>

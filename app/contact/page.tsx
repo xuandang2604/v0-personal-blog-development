@@ -241,7 +241,7 @@ const form = new DeveloperContact()
               Email Me
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/xuandang2604"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 border-2 border-primary text-foreground rounded-lg font-bold hover:bg-primary/10 transition-all hover:scale-105"
