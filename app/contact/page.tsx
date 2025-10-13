@@ -22,40 +22,68 @@ export default function ContactPage() {
     e.preventDefault()
     setIsSubmitting(true)
 
+    // Giả lập gửi tin nhắn
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
     setIsSubmitting(false)
     setSubmitStatus("success")
-    setFormData({ name: "", email: "", message: "" })
+    // Không reset form để người dùng thấy nội dung đã nhập, chỉ reset sau khi hết thông báo
+    
+    setTimeout(() => {
+      setSubmitStatus("idle")
+      setFormData({ name: "", email: "", message: "" })
+      setDisplayText("")
+    }, 3000)
+  }
 
-    setTimeout(() => setSubmitStatus("idle"), 3000)
+  const generateCodeText = (currentFormData: typeof formData, fieldName: string, fieldValue: string): string => {
+    // Lấy giá trị mới nhất của tất cả các trường
+    const currentName = fieldName === 'name' ? fieldValue : currentFormData.name;
+    const currentEmail = fieldName === 'email' ? fieldValue : currentFormData.email;
+    const currentMessage = fieldName === 'message' ? fieldValue : currentFormData.message;
+
+    return `
+// Class đại diện cho thông điệp liên hệ
+class DeveloperContact {
+  constructor() {
+    // Khai báo các thuộc tính (input fields)
+    this.name = "${currentName || 'Tên của bạn'}"
+    this.email = "${currentEmail || 'email@example.com'}"
+    this.message = "${currentMessage || 'Viết lời nhắn của bạn tại đây...'}"
+  }
+  
+  // Hàm gửi yêu cầu (giả lập)
+  async sendRequest() {
+    if (!this.name || !this.email || !this.message) {
+      console.error("Error: Tất cả các trường là bắt buộc.")
+      return false
+    }
+    
+    console.log(\`[START] Gửi yêu cầu từ: \${this.name}\`)
+    // (await fetch('/api/contact', { method: 'POST', body: JSON.stringify(this) }))
+    console.log("Status: Request đang được xử lý...")
+    
+    return true
+  }
+}
+// Khởi tạo và gọi hàm
+const form = new DeveloperContact()
+// form.sendRequest()
+`
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
+    
+    // 1. Cập nhật FormData
+    const updatedFormData = {
+      ...formData,
       [name]: value,
-    }))
+    };
+    setFormData(updatedFormData)
 
-    // Update display text in real-time
-    const codeText = `
-class ContactForm {
-  constructor() {
-    this.name = "${name === "name" ? value : formData.name}";
-    this.email = "${name === "email" ? value : formData.email}";
-    this.message = "${name === "message" ? value : formData.message}";
-  }
-  
-  send() {
-    // Sending message from ${name === "name" ? value : formData.name}
-    console.log("Sending message...");
-    // Message content:
-    // ${name === "message" ? value : formData.message}
-  }
-}
-`
-    setDisplayText(codeText)
+    // 2. Cập nhật DisplayText dựa trên UpdatedFormData
+    setDisplayText(generateCodeText(updatedFormData, name, value))
   }
 
   return (
@@ -77,8 +105,8 @@ class ContactForm {
 
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+          <div className="grid lg:grid-cols-2 gap-12 items-start"> {/* Đổi items-center thành items-start */}
+            <div className="order-2 lg:order-1 flex-1">
               <Card className="p-8 shadow-2xl">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
@@ -156,10 +184,10 @@ class ContactForm {
                     </a>
                     <div className="flex gap-3 pt-2">
                       {[
-                        { icon: Github, href: "https://github.com" },
-                        { icon: Linkedin, href: "https://linkedin.com" },
-                        { icon: Facebook, href: "https://facebook.com" },
-                        { icon: Instagram, href: "https://instagram.com" },
+                        { icon: Github, href: "https://github.com/nguyenlexuandang" }, // Sửa link
+                        { icon: Linkedin, href: "https://linkedin.com/in/yourprofile" }, // Sửa link
+                        { icon: Facebook, href: "https://facebook.com/yourprofile" }, // Sửa link
+                        { icon: Instagram, href: "https://instagram.com/yourprofile" }, // Sửa link
                       ].map((social, i) => (
                         <a
                           key={i}
@@ -177,9 +205,10 @@ class ContactForm {
               </Card>
             </div>
 
-            <div className="order-1 lg:order-2 h-[500px] lg:h-[700px]">
-              <Card className="w-full h-full overflow-hidden shadow-2xl bg-slate-900 flex items-start justify-start p-8 perspective-1000">
-                <pre className="text-sm md:text-base text-green-400 font-mono overflow-auto w-full h-full whitespace-pre-wrap">
+            {/* CODE DISPLAY - Đã sửa lại cấu trúc và Tailwind CSS */}
+            <div className="order-1 lg:order-2 flex-1 min-h-[500px] lg:min-h-[700px]"> 
+              <Card className="w-full h-full overflow-hidden shadow-2xl bg-slate-900 flex items-start justify-start p-4 md:p-8">
+                <pre className="text-xs md:text-sm text-green-400 font-mono overflow-auto w-full h-full whitespace-pre-wrap">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={displayText}
@@ -188,7 +217,7 @@ class ContactForm {
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      {displayText || "/* Hãy bắt đầu gõ để xem code! */"}
+                      {displayText || generateCodeText(formData, '', '')}
                     </motion.span>
                   </AnimatePresence>
                 </pre>

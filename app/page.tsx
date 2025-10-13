@@ -196,7 +196,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
           <div className="relative w-full max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-3 gap-3 md:gap-2 perspective-1000">
+            <div className="grid grid-cols-3 gap-1 md:gap-0.5 perspective-100">
               {techStack.map((tech, index) => {
                 const isFeatured = tech.featured
                 const initialScale = 0.6
