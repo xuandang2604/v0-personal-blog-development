@@ -42,6 +42,14 @@ export function Navigation() {
               Blog
             </Link>
             <Link
+              href="/activities"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === "/activities" ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              Activities
+            </Link>
+            <Link
               href="/contact"
               className={`text-sm font-medium transition-colors hover:text-primary ${
                 pathname === "/contact" ? "text-primary" : "text-muted-foreground"

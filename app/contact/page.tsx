@@ -4,9 +4,8 @@ import type React from "react"
 
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, Facebook, Instagram } from "lucide-react"
+import { Github, Linkedin, Mail, Facebook, Instagram, Send } from "lucide-react"
 import { useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,7 +15,6 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
-  const [displayText, setDisplayText] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -30,26 +28,26 @@ export default function ContactPage() {
     setTimeout(() => {
       setSubmitStatus("idle")
       setFormData({ name: "", email: "", message: "" })
-      setDisplayText("")
     }, 3000)
   }
 
-  const generateCodeText = (currentFormData: typeof formData, fieldName: string, fieldValue: string): string => {
-    const currentName = fieldName === "name" ? fieldValue : currentFormData.name
-    const currentEmail = fieldName === "email" ? fieldValue : currentFormData.email
-    const currentMessage = fieldName === "message" ? fieldValue : currentFormData.message
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
 
-    return `
-// Class đại diện cho thông điệp liên hệ
+  const generateCodeText = (): string => {
+    return `// Class đại diện cho thông điệp liên hệ
 class DeveloperContact {
   constructor() {
-    // Khai báo các thuộc tính (input fields)
-    this.name = "${currentName || "Tên của bạn"}"
-    this.email = "${currentEmail || "email@example.com"}"
-    this.message = "${currentMessage || "Viết lời nhắn của bạn tại đây..."}"
+    this.name = "${formData.name || "Tên của bạn"}"
+    this.email = "${formData.email || "email@example.com"}"
+    this.message = "${formData.message || "Viết lời nhắn..."}"
   }
   
-  // Hàm gửi yêu cầu (giả lập)
   async sendRequest() {
     if (!this.name || !this.email || !this.message) {
       console.error("Error: Tất cả các trường là bắt buộc.")
@@ -57,42 +55,34 @@ class DeveloperContact {
     }
     
     console.log(\`[START] Gửi yêu cầu từ: \${this.name}\`)
-    // (await fetch('/api/contact', { method: 'POST', body: JSON.stringify(this) }))
     console.log("Status: Request đang được xử lý...")
     
     return true
   }
 }
-// Khởi tạo và gọi hàm
+
 const form = new DeveloperContact()
-// form.sendRequest()
-`
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-
-    const updatedFormData = {
-      ...formData,
-      [name]: value,
-    }
-    setFormData(updatedFormData)
-
-    setDisplayText(generateCodeText(updatedFormData, name, value))
+// form.sendRequest()`
   }
 
   return (
     <main className="min-h-screen bg-background">
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-primary/20 via-accent/10 to-background">
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          />
+        </div>
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-balance">
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
               Contact With Me
             </span>
-            <span className="text-red-500 ml-2">&lt;3</span>
+            <span className="text-red-500 ml-2 animate-pulse">&lt;3</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance">
             Hãy liên hệ với tôi để thảo luận về dự án, cơ hội hợp tác, hoặc chỉ đơn giản là trò chuyện về công nghệ!
           </p>
         </div>
@@ -157,9 +147,10 @@ const form = new DeveloperContact()
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-6 text-lg font-semibold hover:scale-105 transition-all"
+                    className="w-full py-6 text-lg font-semibold hover:scale-105 transition-all flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? "Đang gửi..." : "Gửi tin nhắn"}
+                    <Send className="w-5 h-5" />
                   </Button>
 
                   {submitStatus === "success" && (
@@ -204,7 +195,6 @@ const form = new DeveloperContact()
 
             <div className="order-1 lg:order-2 min-h-[500px] lg:min-h-[700px]">
               <Card className="w-full h-full overflow-hidden shadow-2xl bg-slate-900 flex items-start justify-start p-4 md:p-8 relative">
-                {/* Animated floating elements */}
                 <div
                   className="absolute top-10 right-10 w-20 h-20 bg-primary/20 rounded-lg animate-float"
                   style={{ animationDelay: "0s" }}
@@ -219,17 +209,7 @@ const form = new DeveloperContact()
                 />
 
                 <pre className="text-xs md:text-sm text-green-400 font-mono overflow-auto w-full h-full whitespace-pre-wrap relative z-10">
-                  <AnimatePresence mode="wait">
-                    <motion.span
-                      key={displayText}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {displayText || generateCodeText(formData, "", "")}
-                    </motion.span>
-                  </AnimatePresence>
+                  {generateCodeText()}
                 </pre>
               </Card>
             </div>
@@ -237,13 +217,38 @@ const form = new DeveloperContact()
         </div>
       </section>
 
-      <section className="py-16 bg-secondary/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-6">Sẵn sàng hợp tác</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-background relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div
+            className="absolute bottom-10 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            Sẵn sàng hợp tác
+          </h2>
+          <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
             Tôi luôn mở lòng với các cơ hội mới, dự án thú vị, và kết nối với những người cùng đam mê công nghệ. Đừng
             ngần ngại liên hệ với tôi!
           </p>
+          <div className="flex gap-4 justify-center">
+            <a
+              href="mailto:nguyenlexuandang2004@gmail.com"
+              className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-bold hover:shadow-2xl hover:shadow-primary/50 transition-all hover:scale-105"
+            >
+              Email Me
+            </a>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-4 border-2 border-primary text-foreground rounded-lg font-bold hover:bg-primary/10 transition-all hover:scale-105"
+            >
+              View GitHub
+            </a>
+          </div>
         </div>
       </section>
     </main>

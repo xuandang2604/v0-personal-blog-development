@@ -1,7 +1,7 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { ArrowRight, Code2, Network, Server } from "lucide-react"
+import { ArrowRight, Code2, Network, Server, Award } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
@@ -70,13 +70,16 @@ export default function ExpertisePage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse" />
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-primary/20 via-accent/10 to-background">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-primary/40 rounded-full blur-3xl animate-pulse" />
           <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/30 rounded-full blur-3xl animate-pulse"
+            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/40 rounded-full blur-3xl animate-pulse"
             style={{ animationDelay: "1s" }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "0.5s" }}
           />
         </div>
 
@@ -192,7 +195,7 @@ export default function ExpertisePage() {
             </div>
           </div>
 
-          <div>
+          <div className="mb-16">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold mb-4">Supporting Technologies</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -219,6 +222,38 @@ export default function ExpertisePage() {
                     />
                     <h4 className="font-bold mb-1">{skill.name}</h4>
                     <p className="text-sm text-muted-foreground">{skill.desc}</p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Certificates & Achievements
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Professional certifications and recognitions
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5].map((cert) => (
+                <Card
+                  key={cert}
+                  className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 min-h-[280px]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative p-6 flex flex-col items-center justify-center h-full">
+                    <Award className="w-16 h-16 text-primary mb-4 group-hover:scale-110 transition-transform" />
+                    <h3 className="text-xl font-bold mb-2 text-center">Certificate {cert}</h3>
+                    <p className="text-muted-foreground text-center text-sm mb-4">Add your certificate details here</p>
+                    <div className="mt-auto">
+                      <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-xs font-semibold">
+                        2024
+                      </span>
+                    </div>
                   </div>
                 </Card>
               ))}

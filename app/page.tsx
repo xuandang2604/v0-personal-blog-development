@@ -81,21 +81,21 @@ export default function AboutPage() {
   }
 
   const techStack = [
-    { name: "Java", icon: "/icons/java.jpg" },
-    { name: "JavaScript", icon: "/icons/javascript.png" },
     { name: "Python", icon: "/icons/python.jpg" },
     { name: "C#", icon: "/icons/csharp.jpg" },
     { name: "TypeScript", icon: "/icons/typescript.jpg" },
     { name: "React", icon: "/icons/react.jpg" },
     { name: "Node.js", icon: "/icons/nodejs.jpg" },
     { name: "Go", icon: "/icons/go.jpg" },
-    { name: "Rust", icon: "/icons/rust.jpg" },
+    { name: "Java", icon: "/icons/java.jpg" },
+    { name: "JavaScript", icon: "/icons/javascript.png" },
     { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
     { name: "Ruby", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg" },
     { name: "Swift", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" },
     { name: "Kotlin", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" },
     { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
     { name: "Kubernetes", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
+    { name: "Rust", icon: "/icons/rust.jpg" },
   ]
 
   const techLogos = [
@@ -116,12 +116,11 @@ export default function AboutPage() {
     <main className="min-h-screen bg-background">
       {/* Hero Section with Author Info and Video Background */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <div className="absolute inset-0 w-full h-full overflow-hidden z-0">
           <video ref={videoRef} autoPlay loop muted playsInline className="w-full h-full object-cover">
             <source src="https://cdn.pixabay.com/video/2023/11/30/191019-890947793_large.mp4" type="video/mp4" />
           </video>
-          {/* Gradient overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/40" />
         </div>
 
         <audio ref={audioRef} loop>
@@ -207,19 +206,6 @@ export default function AboutPage() {
                 </Link>
               </div>
             </div>
-
-            {/* Right: Black overlay showing video content (6 columns) */}
-            <div className="lg:col-span-6 relative h-[500px] lg:h-[600px]">
-              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl bg-black/40 backdrop-blur-sm border border-primary/20">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center space-y-4 p-8">
-                    <div className="text-6xl font-mono font-bold text-primary animate-pulse">{"<Code />"}</div>
-                    <p className="text-2xl text-white font-semibold">Building the Future</p>
-                    <p className="text-lg text-white/80">with Network Programming</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -238,10 +224,10 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-accent/5" />
 
           <div className="relative w-full max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-5 gap-3 md:gap-4">
+            <div className="grid grid-cols-5 gap-2 md:gap-3">
               {techStack.map((tech, index) => {
                 const isFeatured = index === featuredIndex
-                const initialScale = 0.85 // Smaller initial size
+                const initialScale = 0.7 // Smaller initial size
                 const zoomFactor = 4 // Stronger zoom effect
 
                 const scale = isFeatured
@@ -262,7 +248,7 @@ export default function AboutPage() {
                     }}
                   >
                     <Card
-                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-3 md:p-4 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
+                      className={`group relative overflow-hidden aspect-square flex flex-col items-center justify-center p-2 md:p-3 ${isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"} transition-all duration-300`}
                     >
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"} opacity-0 group-hover:opacity-100 transition-opacity`}
@@ -270,14 +256,14 @@ export default function AboutPage() {
                       <img
                         src={tech.icon || "/placeholder.svg"}
                         alt={tech.name}
-                        className="w-10 h-10 md:w-14 md:h-14 object-contain mb-2 transform group-hover:scale-110 transition-transform"
+                        className="w-8 h-8 md:w-12 md:h-12 object-contain mb-1 transform group-hover:scale-110 transition-transform"
                       />
-                      <h3 className={`font-bold text-center text-xs md:text-sm ${isFeatured ? "text-primary" : ""}`}>
+                      <h3 className={`font-bold text-center text-xs ${isFeatured ? "text-primary" : ""}`}>
                         {tech.name}
                       </h3>
                       {isFeatured && scrollProgress > 0.6 && (
-                        <div className="absolute top-2 right-2">
-                          <span className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
+                        <div className="absolute top-1 right-1">
+                          <span className="px-2 py-0.5 bg-primary text-primary-foreground text-xs rounded-full font-bold animate-pulse">
                             Featured
                           </span>
                         </div>

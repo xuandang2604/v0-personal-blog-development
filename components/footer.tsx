@@ -92,7 +92,6 @@ export function Footer() {
               </li>
             </ul>
           </div>
-
           {/* Contact */}
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
