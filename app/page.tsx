@@ -81,9 +81,9 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
         </div>
 
-        <audio ref={audioRef} loop className="hidden">
-          <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4a8f1b6e8e.mp3" type="audio/mpeg" />
-        </audio>
+       <audio ref={audioRef} loop className="hidden">
+  <source src="https://cdn.pixabay.com/audio/2023/12/28/audio_af11b64cfb.mp3" type="audio/mpeg" />
+</audio>
 
         <button
           onClick={toggleMusic}
@@ -169,7 +169,7 @@ export default function AboutPage() {
             <div className="lg:col-span-6 relative h-[500px] lg:h-[600px]">
               <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl">
                 <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-                  <source src="https://drive.google.com/file/d/17timsOLVb90C5-USgqneGgDIn2m3qzB2/view?usp=drive_link" type="video/mp4" />
+                  <source src="https://drive.google.com/file/d/17timsOLVb90C5-USgqneGgDIn2m3qzB2/view?usp=sharing" type="video/mp4" />
                 </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
 
