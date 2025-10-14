@@ -192,12 +192,8 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-background/20" />
         </div>
 
-        {/* Audio element: remove forced muted attr to allow unmuted autoplay attempt */}
-        <audio ref={audioRef} loop preload="auto">
-          <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/git-blob/prj_RWrCzlAzFsBFMSBtl5BvopvV4o92/5XGb5SWxxQRYaICeSvbzGM/public/audio/jazz.mp3" type="audio/mpeg" />
-        </audio>
+  
 
-        {/* Play / unmute control (bottom-right) */}
 
         {/* hero content (existing) */}
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
