@@ -183,7 +183,7 @@ export default function AboutPage() {
         {/* video background (stronger visual) */}
         <video
           className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60"
-          src="/videos/it-bg.mp4"
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/git-blob/prj_RWrCzlAzFsBFMSBtl5BvopvV4o92/KDQsdJFuacVfXeNFqXYNoz/public/videos/it-bg.mp4"
           autoPlay
           muted
           loop

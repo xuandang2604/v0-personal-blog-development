@@ -58,7 +58,7 @@ export default function GlobalAudio() {
   return (
     <>
       <audio ref={audioRef} loop preload="auto">
-        <source src="/audio/jazz.mp3" type="audio/mpeg" />
+        <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/git-blob/prj_RWrCzlAzFsBFMSBtl5BvopvV4o92/5XGb5SWxxQRYaICeSvbzGM/public/audio/jazz.mp3" type="audio/mpeg" />
       </audio>
 
       <button
