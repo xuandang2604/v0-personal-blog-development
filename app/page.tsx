@@ -21,10 +21,35 @@ export default function AboutPage() {
   const [featuredIndex, setFeaturedIndex] = useState(7); // Random featured card on load
   const [isMuted, setIsMuted] = useState(true);
   const techStackRef = useRef<HTMLDivElement>(null);
+  // useEffect(() => {
+  //   const randomIndex = Math.floor(Math.random() * 15);
+  //   setFeaturedIndex(randomIndex);
+  // }, []);
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * 15);
-    setFeaturedIndex(randomIndex);
+    const featureableTechs = [
+      "TypeScript",
+      "Java",
+      "JavaScript",
+      "C#",
+      "Node.js",
+    ];
+    const featureableIndexes = techStack
+      .map((tech, index) => {
+        // Tìm index của các card có tên nằm trong danh sách featureableTechs
+        if (featureableTechs.includes(tech.name)) {
+          return index;
+        }
+        return null;
+      })
+      // Lọc bỏ các giá trị null
+      .filter((index) => index !== null);
+
+    if (featureableIndexes.length > 0) {
+      // Chọn một chỉ mục ngẫu nhiên từ danh sách đã lọc
+      const randomIndex = Math.floor(Math.random() * featureableIndexes.length);
+      setFeaturedIndex(featureableIndexes[randomIndex]);
+    }
   }, []);
 
   useEffect(() => {
@@ -78,32 +103,20 @@ export default function AboutPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        audioRef.current.play().catch(() => {});
-        setIsPlaying(true);
-      }
-    }
-  };
-
   const techStack = [
     { name: "Python", icon: "/icons/python.jpg" },
-    { name: "C#", icon: "/icons/csharp.jpg" },
-    { name: "Java", icon: "/icons/java.jpg" },
-    { name: "JavaScript", icon: "/icons/javascript.png" },
-    { name: "TypeScript", icon: "/icons/typescript.jpg" },
     { name: "React", icon: "/icons/react.jpg" },
-    { name: "Node.js", icon: "/icons/nodejs.jpg" },
     { name: "Go", icon: "/icons/go.jpg" },
     { name: "Rust", icon: "/icons/rust.jpg" },
     {
       name: "PHP",
       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
     },
+    { name: "C#", icon: "/icons/csharp.jpg" },
+    { name: "Java", icon: "/icons/java.jpg" },
+    { name: "JavaScript", icon: "/icons/javascript.png" },
+    { name: "TypeScript", icon: "/icons/typescript.jpg" },
+    { name: "Node.js", icon: "/icons/nodejs.jpg" },
     {
       name: "Ruby",
       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ruby/ruby-original.svg",
@@ -192,13 +205,6 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/60 to-background/20" />
         </div>
 
-        {/* Audio element: remove forced muted attr to allow unmuted autoplay attempt */}
-        <audio ref={audioRef} loop preload="auto">
-          <source src="/audio/jazz.mp3" type="audio/mpeg" />
-        </audio>
-
-        {/* Play / unmute control (bottom-right) */}
-
         {/* hero content (existing) */}
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-10 gap-12 items-center">
@@ -221,7 +227,7 @@ export default function AboutPage() {
                   </span>
                 </h1>
                 <p className="text-2xl font-semibold text-primary mb-2">
-                  Lập Trình Viên Mạng
+                  Lập Trình Viên
                 </p>
                 <p className="text-lg text-muted-foreground/90">
                   Sinh viên năm cuối | Đại học HUTECH
@@ -239,22 +245,22 @@ export default function AboutPage() {
 
               <div className="flex gap-4">
                 {[
-                  { icon: Github, href: "https://github.com", label: "GitHub" },
-                  {
-                    icon: Linkedin,
-                    href: "https://linkedin.com",
-                    label: "LinkedIn",
-                  },
-                  {
-                    icon: Mail,
-                    href: "mailto:contact@example.com",
-                    label: "Email",
-                  },
                   {
                     icon: Facebook,
                     href: "https://facebook.com",
                     label: "Facebook",
                   },
+                  {
+                    icon: Github,
+                    href: "https://github.com/xuandang2604",
+                    label: "GitHub",
+                  },
+                  {
+                    icon: Linkedin,
+                    href: "https://www.linkedin.com/in/nguyen-dang-172a03201/",
+                    label: "LinkedIn",
+                  },
+
                   {
                     icon: Instagram,
                     href: "https://instagram.com",
@@ -304,7 +310,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       <section
         ref={techStackRef}
         className="relative min-h-[300vh] bg-gradient-to-br from-background via-primary/5 to-accent/5"
@@ -325,7 +330,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-5 gap-3 md:gap-4">
               {techStack.map((tech, index) => {
                 const isFeatured = index === featuredIndex;
-                const initialScale = 0.7; // Smaller initial size to fit all 15 cards
+                const initialScale = 0.7;
                 const zoomFactor = 4;
 
                 const scale = isFeatured
@@ -341,8 +346,8 @@ export default function AboutPage() {
                 let gridColumn = "";
                 let gridRow = "";
                 if (isFeatured && scrollProgress > 0.3) {
-                  gridColumn = "3"; // Center column (1-indexed)
-                  gridRow = "2"; // Middle row
+                  gridColumn = "3";
+                  gridRow = "2";
                 }
 
                 return (
@@ -402,7 +407,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       <section className="py-12 bg-secondary/30">
         <div className="max-w-full px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
@@ -454,8 +458,12 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      <section className="py-6 bg-background overflow-hidden border-y border-border">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Công Ty Mơ Ước
+        </h2>
+      </div>
+      <section className="py-6 overflow-hidden">
         <div className="relative">
           <div className="flex animate-scroll-left gap-12 items-center">
             {[...techLogos, ...techLogos, ...techLogos].map((logo, i) => (
@@ -473,7 +481,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
       <section className="py-24 bg-gradient-to-br from-background via-primary/5 to-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

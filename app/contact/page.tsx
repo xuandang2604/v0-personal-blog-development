@@ -34,7 +34,7 @@ export default function ContactPage() {
 
   // generate a long fake code block (header uses current form values)
   const fakeCode = useMemo(() => {
-    const header = `// Class đại diện cho thông điệp liên hệ
+    const header = `// Class đại diện cho thông tin liên hệ
 class DeveloperContact {
   constructor() {
     this.name = "${formData.name || "Tên của bạn"}"
