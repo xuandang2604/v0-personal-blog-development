@@ -170,7 +170,7 @@ export default function AboutPage() {
         {/* video background (stronger visual) */}
         <video
           className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-60"
-          src="/videos/it-bg.mp4"
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/git-blob/prj_RWrCzlAzFsBFMSBtl5BvopvV4o92/KDQsdJFuacVfXeNFqXYNoz/public/videos/it-bg.mp4"
           autoPlay
           muted
           loop
@@ -194,7 +194,7 @@ export default function AboutPage() {
 
         {/* Audio element: remove forced muted attr to allow unmuted autoplay attempt */}
         <audio ref={audioRef} loop preload="auto">
-          <source src="/audio/jazz.mp3" type="audio/mpeg" />
+          <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/git-blob/prj_RWrCzlAzFsBFMSBtl5BvopvV4o92/5XGb5SWxxQRYaICeSvbzGM/public/audio/jazz.mp3" type="audio/mpeg" />
         </audio>
 
         {/* Play / unmute control (bottom-right) */}
