@@ -1,5 +1,12 @@
-import { Code2, Github, Linkedin, Mail, Facebook, Instagram } from "lucide-react"
-import Link from "next/link"
+import {
+  Code2,
+  Github,
+  Linkedin,
+  Mail,
+  Facebook,
+  Instagram,
+} from "lucide-react";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -8,7 +15,10 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 font-semibold text-lg mb-4">
+            <Link
+              href="/"
+              className="flex items-center gap-2 font-semibold text-lg mb-4"
+            >
               <Code2 className="w-6 h-6 text-primary" />
               <span>Nguyễn Lê Xuân Đăng</span>
             </Link>
@@ -59,7 +69,11 @@ export function Footer() {
                 className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110"
                 aria-label="X (Twitter)"
               >
-                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-5 h-5 text-primary"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
@@ -71,22 +85,34 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   About Me
                 </Link>
               </li>
               <li>
-                <Link href="/expertise" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/expertise"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Expertise
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/blog"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link
+                  href="/contact"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Contact
                 </Link>
               </li>
@@ -95,28 +121,23 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h3 className="font-semibold mb-4">Contact</h3>
-            <ul className="space-y-2">
-              <li>
-                <a
-                  href="nguyenlexuandang2004@gmail.com"
-                  className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>nguyenlexuandang2004@gmail.com</span>
-                </a>
-              </li>
-              <li className="text-muted-foreground">0987654321</li>
-              <li className="text-muted-foreground">HUTECH University</li>
-              <li className="text-muted-foreground">Ho Chi Minh City, Vietnam</li>
-            </ul>
+            <li className="text-muted-foreground">
+              nguyenlexuandang2004@gmail.com
+            </li>
+            <li className="text-muted-foreground">0987654321</li>
+            <li className="text-muted-foreground">HUTECH University</li>
+            <li className="text-muted-foreground">Ho Chi Minh City, Vietnam</li>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Nguyễn Lê Xuân Đăng. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Nguyễn Lê Xuân Đăng. All rights
+            reserved.
+          </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

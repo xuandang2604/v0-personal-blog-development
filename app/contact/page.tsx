@@ -1,69 +1,129 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, Facebook, Instagram, Send } from "lucide-react"
-import { useState } from "react"
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Facebook,
+  Instagram,
+  Send,
+} from "lucide-react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+  // fake code + reveal state for "hackertyper" behavior
+  const [reveal, setReveal] = useState(0);
+  const preRef = useRef<HTMLPreElement | null>(null);
 
-    setIsSubmitting(false)
-    setSubmitStatus("success")
-
-    setTimeout(() => {
-      setSubmitStatus("idle")
-      setFormData({ name: "", email: "", message: "" })
-    }, 3000)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-  }
-
-  const generateCodeText = (): string => {
-    return `// Class đại diện cho thông điệp liên hệ
+  // generate a long fake code block (header uses current form values)
+  const fakeCode = useMemo(() => {
+    const header = `// Class đại diện cho thông điệp liên hệ
 class DeveloperContact {
   constructor() {
     this.name = "${formData.name || "Tên của bạn"}"
     this.email = "${formData.email || "email@example.com"}"
     this.message = "${formData.message || "Viết lời nhắn..."}"
   }
-  
+
   async sendRequest() {
     if (!this.name || !this.email || !this.message) {
       console.error("Error: Tất cả các trường là bắt buộc.")
       return false
     }
-    
     console.log(\`[START] Gửi yêu cầu từ: \${this.name}\`)
-    console.log("Status: Request đang được xử lý...")
-    
     return true
   }
 }
 
 const form = new DeveloperContact()
-// form.sendRequest()`
-  }
+// form.sendRequest()
+`;
+
+    const filler = `// helper
+function hashPayload(payload){let r=5381;for(let i=0;i<payload.length;i++){r=(r*33)^payload.charCodeAt(i)}return (r>>>0).toString(16)}
+
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+async function transmit(packet){for(let i=0;i<3;i++){console.log("Attempt",i+1,"->",packet.id);await sleep(8)}return {ok:true,id:packet.id}}
+
+console.log("runtime:",Date.now())`;
+
+    // repeat filler to make the block long enough
+    return header + "\n\n" + Array(40).fill(filler).join("\n\n");
+  }, [formData]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    setIsSubmitting(false);
+    setSubmitStatus("success");
+    setReveal(0);
+    setTimeout(() => {
+      setSubmitStatus("idle");
+      setFormData({ name: "", email: "", message: "" });
+    }, 3000);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // reveal characters when user types inside inputs/textareas
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const active = document.activeElement?.tagName;
+      if (!active || !["INPUT", "TEXTAREA"].includes(active)) return;
+      // roughly emulate hackertyper: reveal a random chunk per keystroke
+      const delta =
+        e.key === "Backspace"
+          ? Math.max(1, Math.floor(Math.random() * 3))
+          : Math.floor(Math.random() * 8) + 3;
+      setReveal((prev) => Math.min(fakeCode.length, Math.max(0, prev + delta)));
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [fakeCode]);
+
+  // auto-scroll revealed pre to bottom
+  useEffect(() => {
+    if (preRef.current) preRef.current.scrollTop = preRef.current.scrollHeight;
+  }, [reveal]);
+
+  // close modal on escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsModalOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <main className="min-h-screen bg-background">
@@ -83,7 +143,8 @@ const form = new DeveloperContact()
             <span className="text-red-500 ml-2 animate-pulse">&lt;3</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance">
-            Hãy liên hệ với tôi để thảo luận về dự án, cơ hội hợp tác, hoặc chỉ đơn giản là trò chuyện về công nghệ!
+            Hãy liên hệ với tôi để thảo luận về dự án, cơ hội hợp tác, hoặc chỉ
+            đơn giản là trò chuyện về công nghệ!
           </p>
         </div>
       </section>
@@ -96,7 +157,10 @@ const form = new DeveloperContact()
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium mb-2"
+                      >
                         Tên của bạn
                       </label>
                       <input
@@ -112,7 +176,10 @@ const form = new DeveloperContact()
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium mb-2"
+                      >
                         Email
                       </label>
                       <input
@@ -129,7 +196,10 @@ const form = new DeveloperContact()
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium mb-2"
+                    >
                       Lời nhắn
                     </label>
                     <textarea
@@ -194,7 +264,10 @@ const form = new DeveloperContact()
             </div>
 
             <div className="order-1 lg:order-2 min-h-[500px] lg:min-h-[700px]">
-              <Card className="w-full h-full overflow-hidden shadow-2xl bg-slate-900 flex items-start justify-start p-4 md:p-8 relative">
+              <Card
+                onClick={() => setIsModalOpen(true)}
+                className="w-full h-full overflow-hidden shadow-2xl bg-slate-900 flex items-start justify-start p-4 md:p-8 relative cursor-pointer"
+              >
                 <div
                   className="absolute top-10 right-10 w-20 h-20 bg-primary/20 rounded-lg animate-float"
                   style={{ animationDelay: "0s" }}
@@ -208,14 +281,52 @@ const form = new DeveloperContact()
                   style={{ animationDelay: "0.5s" }}
                 />
 
-                <pre className="text-xs md:text-sm text-green-400 font-mono overflow-auto w-full h-full whitespace-pre-wrap relative z-10">
-                  {generateCodeText()}
+                {/* code panel: initially empty, reveals when user types in the form */}
+                <pre
+                  ref={preRef as any}
+                  className="text-xs md:text-sm text-green-400 font-mono overflow-auto w-full h-full whitespace-pre-wrap relative z-10 select-text p-4"
+                  aria-hidden={false}
+                >
+                  {fakeCode.slice(0, reveal)}
+                  <span className="inline-block animate-pulse">|</span>
                 </pre>
               </Card>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Lightbox modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 p-6"
+          onClick={() => setIsModalOpen(false)}
+          aria-modal="true"
+        >
+          <div
+            ref={modalRef}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-5xl max-h-[85vh] bg-[#07121a] rounded-xl shadow-2xl overflow-hidden border border-slate-800"
+            role="dialog"
+          >
+            <div className="flex items-center justify-between p-4 border-b border-slate-800">
+              <div className="text-sm text-slate-400">Code Preview</div>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-slate-300 hover:text-white px-3 py-1 rounded hover:bg-slate-800"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-4 overflow-auto">
+              <pre className="text-sm text-green-400 font-mono whitespace-pre-wrap">
+                {fakeCode.slice(0, reveal)}
+              </pre>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section className="py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-background relative overflow-hidden">
         <div className="absolute inset-0">
@@ -230,8 +341,8 @@ const form = new DeveloperContact()
             Sẵn sàng hợp tác
           </h2>
           <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-            Tôi luôn mở lòng với các cơ hội mới, dự án thú vị, và kết nối với những người cùng đam mê công nghệ. Đừng
-            ngần ngại liên hệ với tôi!
+            Tôi luôn mở lòng với các cơ hội mới, dự án thú vị, và kết nối với
+            những người cùng đam mê công nghệ. Đừng ngần ngại liên hệ với tôi!
           </p>
           <div className="flex gap-4 justify-center">
             <a
@@ -252,5 +363,5 @@ const form = new DeveloperContact()
         </div>
       </section>
     </main>
-  )
+  );
 }

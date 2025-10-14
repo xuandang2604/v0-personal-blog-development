@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { ArrowRight, Code2, Network, Server, Award } from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
+import { Card } from "@/components/ui/card";
+import { ArrowRight, Code2, Network, Server, Award } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function ExpertisePage() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const mainExpertise = [
     {
@@ -39,7 +39,7 @@ export default function ExpertisePage() {
       ],
       tags: ["TypeScript", "Node.js", "WebSocket", "Socket.IO", "Express"],
     },
-  ]
+  ];
 
   const networkingCards = [
     {
@@ -47,7 +47,12 @@ export default function ExpertisePage() {
       description:
         "Thành thạo lập trình socket TCP/UDP để xây dựng ứng dụng client-server mạnh mẽ với truyền dữ liệu đáng tin cậy và quản lý kết nối.",
       icon: <Network className="w-12 h-12" />,
-      topics: ["TCP Sockets", "UDP Datagrams", "Kiến trúc Client-Server", "Connection Pooling"],
+      topics: [
+        "TCP Sockets",
+        "UDP Datagrams",
+        "Kiến trúc Client-Server",
+        "Connection Pooling",
+      ],
       color: "from-blue-500 to-cyan-500",
     },
     {
@@ -55,7 +60,12 @@ export default function ExpertisePage() {
       description:
         "Triển khai WebSocket và Socket.IO cho giao tiếp hai chiều, dựa trên sự kiện trong ứng dụng web hiện đại với độ trễ thấp.",
       icon: <Code2 className="w-12 h-12" />,
-      topics: ["Giao thức WebSocket", "Socket.IO Events", "Broadcasting", "Quản lý Room"],
+      topics: [
+        "Giao thức WebSocket",
+        "Socket.IO Events",
+        "Broadcasting",
+        "Quản lý Room",
+      ],
       color: "from-purple-500 to-pink-500",
     },
     {
@@ -66,7 +76,40 @@ export default function ExpertisePage() {
       topics: ["HTTP/HTTPS", "REST APIs", "Microservices", "Cân bằng tải"],
       color: "from-orange-500 to-red-500",
     },
-  ]
+  ];
+
+  const certificates = [
+    {
+      id: 1,
+      title: "Chứng chỉ A",
+      src: "/certificates/cert1.png",
+      year: "2024",
+    },
+    {
+      id: 2,
+      title: "Chứng chỉ B",
+      src: "/certificates/cert2.png",
+      year: "2024",
+    },
+    {
+      id: 3,
+      title: "Chứng chỉ C",
+      src: "/certificates/cert3.png",
+      year: "2024",
+    },
+    {
+      id: 4,
+      title: "Chứng chỉ D",
+      src: "/certificates/cert4.png",
+      year: "2024",
+    },
+    {
+      id: 5,
+      title: "Chứng chỉ E",
+      src: "/certificates/cert5.png",
+      year: "2024",
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-background">
@@ -90,9 +133,13 @@ export default function ExpertisePage() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed">
-            Chuyên về <span className="text-primary font-semibold">Lập Trình Mạng Java</span>,{" "}
-            <span className="text-accent font-semibold">TypeScript</span> &{" "}
-            <span className="text-accent font-semibold">Node.js</span> để xây dựng hệ thống phân tán có khả năng mở rộng
+            Chuyên về{" "}
+            <span className="text-primary font-semibold">
+              Lập Trình Mạng Java
+            </span>
+            , <span className="text-accent font-semibold">TypeScript</span> &{" "}
+            <span className="text-accent font-semibold">Node.js</span> để xây
+            dựng hệ thống phân tán có khả năng mở rộng
           </p>
         </div>
       </section>
@@ -130,15 +177,22 @@ export default function ExpertisePage() {
                     </h3>
                   </div>
 
-                  <p className="text-muted-foreground leading-relaxed mb-6 text-lg">{expertise.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6 text-lg">
+                    {expertise.description}
+                  </p>
 
                   <div className="space-y-3 mb-6">
                     {expertise.skills.map((skill, i) => (
-                      <div key={i} className="flex items-start gap-3 group/item">
+                      <div
+                        key={i}
+                        className="flex items-start gap-3 group/item"
+                      >
                         <div
-                          className={`w-2 h-2 rounded-full bg-gradient-to-r ${expertise.gradient} mt-2 flex-shrink-0 group-hover/item:scale-150 transition-transform`}
+                          className={`w-2 h-2 rounded-full bg-gradient-to-r ${expertise.gradient} mt-2 flex-shrink-0 group-hover:item:scale-150 transition-transform`}
                         />
-                        <p className="text-foreground/90 group-hover/item:text-foreground transition-colors">{skill}</p>
+                        <p className="text-foreground/90 group-hover/item:text-foreground transition-colors">
+                          {skill}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -178,14 +232,24 @@ export default function ExpertisePage() {
                     className={`absolute inset-0 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-10 transition-opacity`}
                   />
                   <div className="relative p-8">
-                    <div className={`text-primary mb-6 group-hover:scale-110 transition-transform`}>{card.icon}</div>
-                    <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">{card.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed mb-6">{card.description}</p>
+                    <div
+                      className={`text-primary mb-6 group-hover:scale-110 transition-transform`}
+                    >
+                      {card.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
+                      {card.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed mb-6">
+                      {card.description}
+                    </p>
                     <div className="space-y-2">
                       {card.topics.map((topic, i) => (
                         <div key={i} className="flex items-center gap-2">
                           <ArrowRight className="w-4 h-4 text-primary flex-shrink-0 group-hover:translate-x-1 transition-transform" />
-                          <span className="text-sm text-muted-foreground">{topic}</span>
+                          <span className="text-sm text-muted-foreground">
+                            {topic}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -205,10 +269,26 @@ export default function ExpertisePage() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
               {[
-                { name: "React", icon: "/icons/react.jpg", desc: "Giao diện hiện đại" },
-                { name: "Python", icon: "/icons/python.jpg", desc: "Scripting" },
-                { name: "Git", icon: "/git-logo.png", desc: "Quản lý phiên bản" },
-                { name: "C#", icon: "/icons/csharp.jpg", desc: "Phát triển .NET" },
+                {
+                  name: "React",
+                  icon: "/icons/react.jpg",
+                  desc: "Giao diện hiện đại",
+                },
+                {
+                  name: "Python",
+                  icon: "/icons/python.jpg",
+                  desc: "Scripting",
+                },
+                {
+                  name: "Git",
+                  icon: "/git-logo.png",
+                  desc: "Quản lý phiên bản",
+                },
+                {
+                  name: "C#",
+                  icon: "/icons/csharp.jpg",
+                  desc: "Phát triển .NET",
+                },
                 {
                   name: "Docker",
                   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
@@ -231,7 +311,9 @@ export default function ExpertisePage() {
                       className="w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform"
                     />
                     <h4 className="font-bold mb-1">{skill.name}</h4>
-                    <p className="text-sm text-muted-foreground">{skill.desc}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {skill.desc}
+                    </p>
                   </div>
                 </Card>
               ))}
@@ -243,27 +325,23 @@ export default function ExpertisePage() {
               <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Chứng Chỉ & Thành Tích
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Chứng chỉ chuyên môn và sự công nhận</p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Chứng chỉ chuyên môn và sự công nhận
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5].map((cert) => (
+              {certificates.map((c) => (
                 <Card
-                  key={cert}
-                  className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 min-h-[280px]"
+                  key={c.id}
+                  className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative p-6 flex flex-col items-center justify-center h-full">
-                    <Award className="w-16 h-16 text-primary mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="text-xl font-bold mb-2 text-center">Chứng chỉ {cert}</h3>
-                    <p className="text-muted-foreground text-center text-sm mb-4">
-                      Thêm chi tiết chứng chỉ của bạn tại đây
-                    </p>
-                    <div className="mt-auto">
-                      <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-xs font-semibold">
-                        2024
-                      </span>
-                    </div>
+                  <div className="w-full h-56 md:h-64 lg:h-72 relative">
+                    <img
+                      src={c.src}
+                      alt={c.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
                   </div>
                 </Card>
               ))}
@@ -279,7 +357,8 @@ export default function ExpertisePage() {
             Khám Phá Các Bài Viết Kỹ Thuật
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Đọc các hướng dẫn và bài viết chuyên sâu về lập trình mạng với Java, TypeScript và Node.js
+            Đọc các hướng dẫn và bài viết chuyên sâu về lập trình mạng với Java,
+            TypeScript và Node.js
           </p>
           <Link
             href="/blog"
@@ -291,5 +370,5 @@ export default function ExpertisePage() {
         </div>
       </section>
     </main>
-  )
+  );
 }
