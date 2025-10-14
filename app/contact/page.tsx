@@ -81,7 +81,7 @@ console.log("runtime:",Date.now())`;
     setTimeout(() => {
       setSubmitStatus("idle");
       setFormData({ name: "", email: "", message: "" });
-    }, 3000);
+    }, 1000);
   };
 
   const handleChange = (

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { Trophy, Star } from "lucide-react"
+import { Card } from "@/components/ui/card";
+import { Trophy, Star } from "lucide-react";
 
 export default function ActivitiesPage() {
   const activities = [
@@ -10,9 +10,13 @@ export default function ActivitiesPage() {
       period: "2022 - Hiện tại",
       icon: "⚽",
       color: "from-green-500 to-emerald-500",
-      description: "Thành viên đội bóng đá khoa, tham gia các giải đấu nội bộ trường",
-      achievements: ["Vô địch giải bóng đá khoa 2023", "Cầu thủ xuất sắc nhất tháng 10/2023"],
-      image: "/diverse-soccer-team.png",
+      description:
+        "Thành viên đội bóng đá khoa, tham gia các giải đấu nội bộ trường",
+      achievements: [
+        "Vô địch giải bóng đá khoa 2023",
+        "Cầu thủ xuất sắc nhất tháng 10/2023",
+      ],
+      image: "/activities/act1.png",
     },
     {
       title: "Hoạt động tình nguyện",
@@ -20,8 +24,11 @@ export default function ActivitiesPage() {
       icon: "❤️",
       color: "from-red-500 to-pink-500",
       description: "Tham gia các hoạt động từ thiện và tình nguyện cộng đồng",
-      achievements: ["Tình nguyện viên xuất sắc 2023", "Tham gia 15+ hoạt động từ thiện"],
-      image: "/volunteer-community.jpg",
+      achievements: [
+        "Tình nguyện viên xuất sắc 2023",
+        "Tham gia 15+ hoạt động từ thiện",
+      ],
+      image: "/activities/act2.png",
     },
     {
       title: "Câu lạc bộ Lập trình",
@@ -29,8 +36,11 @@ export default function ActivitiesPage() {
       icon: "💻",
       color: "from-blue-500 to-cyan-500",
       description: "Thành viên tích cực của CLB Lập trình HUTECH",
-      achievements: ["Giải nhì cuộc thi Hackathon 2023", "Mentor cho sinh viên năm nhất"],
-      image: "/coding-club-students.jpg",
+      achievements: [
+        "Đội trưởng nhóm dự án mã nguồn mở",
+        "Mentor cho sinh viên năm nhất",
+      ],
+      image: "/activities/act3.png",
     },
     {
       title: "Chạy bộ & Gym",
@@ -39,9 +49,9 @@ export default function ActivitiesPage() {
       color: "from-orange-500 to-red-500",
       description: "Duy trì thói quen tập luyện thể thao đều đặn",
       achievements: ["Hoàn thành Half Marathon 2024", "Tập gym 5 ngày/tuần"],
-      image: "/running-fitness.jpg",
+      image: "/activities/act4.png",
     },
-  ]
+  ];
 
   return (
     <main className="min-h-screen bg-background">
@@ -72,7 +82,9 @@ export default function ActivitiesPage() {
             {activities.map((activity, index) => (
               <div
                 key={index}
-                className={`grid lg:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
+                className={`grid lg:grid-cols-2 gap-8 items-center ${
+                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                }`}
               >
                 <div className={index % 2 === 1 ? "lg:order-2" : ""}>
                   <Card className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300">
@@ -98,12 +110,18 @@ export default function ActivitiesPage() {
                         {activity.icon}
                       </div>
                       <div>
-                        <h2 className="text-3xl md:text-4xl font-bold">{activity.title}</h2>
-                        <p className="text-muted-foreground">{activity.period}</p>
+                        <h2 className="text-3xl md:text-4xl font-bold">
+                          {activity.title}
+                        </h2>
+                        <p className="text-muted-foreground">
+                          {activity.period}
+                        </p>
                       </div>
                     </div>
 
-                    <p className="text-lg text-muted-foreground leading-relaxed">{activity.description}</p>
+                    <p className="text-lg text-muted-foreground leading-relaxed">
+                      {activity.description}
+                    </p>
 
                     <div className="space-y-2">
                       <h3 className="font-semibold text-lg flex items-center gap-2">
@@ -131,11 +149,13 @@ export default function ActivitiesPage() {
             Cân Bằng Là Chìa Khóa
           </h2>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            Tôi tin rằng sự cân bằng giữa công việc, học tập và các hoạt động ngoại khóa là chìa khóa để phát triển toàn
-            diện. Các hoạt động này giúp tôi duy trì sức khỏe, kết nối với cộng đồng và phát triển kỹ năng mềm.
+            Tôi tin rằng sự cân bằng giữa công việc, học tập và các hoạt động
+            ngoại khóa là chìa khóa để phát triển toàn diện. Các hoạt động này
+            giúp tôi duy trì sức khỏe, kết nối với cộng đồng và phát triển kỹ
+            năng mềm.
           </p>
         </div>
       </section>
     </main>
-  )
+  );
 }
