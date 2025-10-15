@@ -11,8 +11,9 @@ import {
   VolumeX,
 } from "lucide-react";
 import Link from "next/link";
-
 import { Card } from "@/components/ui/card";
+import { HeroDecryptingText } from "@/components/somethings/decrypting";
+import ThreeDCard from "@/components/somethings/ThreeDCard";
 
 export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -52,35 +53,35 @@ export default function AboutPage() {
     }
   }, []);
 
-  useEffect(() => {
-    // try to autoplay unmuted first; if blocked, fall back to muted autoplay
-    const a = audioRef.current;
-    if (!a) return;
-    a.volume = 0.18;
-    const tryPlay = async () => {
-      try {
-        a.muted = false;
-        await a.play();
-        setIsPlaying(true);
-        setIsMuted(false);
-      } catch {
-        // unmuted autoplay blocked -> try muted autoplay
-        try {
-          a.muted = true;
-          await a.play();
-          setIsPlaying(true);
-          setIsMuted(true);
-        } catch {
-          setIsPlaying(false);
-          setIsMuted(true);
-        }
-      }
-    };
-    tryPlay();
-    return () => {
-      if (audioRef.current) audioRef.current.pause();
-    };
-  }, []);
+  // useEffect(() => {
+  //   // try to autoplay unmuted first; if blocked, fall back to muted autoplay
+  //   const a = audioRef.current;
+  //   if (!a) return;
+  //   a.volume = 0.18;
+  //   const tryPlay = async () => {
+  //     try {
+  //       a.muted = false;
+  //       await a.play();
+  //       setIsPlaying(true);
+  //       setIsMuted(false);
+  //     } catch {
+  //       // unmuted autoplay blocked -> try muted autoplay
+  //       try {
+  //         a.muted = true;
+  //         await a.play();
+  //         setIsPlaying(true);
+  //         setIsMuted(true);
+  //       } catch {
+  //         setIsPlaying(false);
+  //         setIsMuted(true);
+  //       }
+  //     }
+  //   };
+  //   tryPlay();
+  //   return () => {
+  //     if (audioRef.current) audioRef.current.pause();
+  //   };
+  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -209,19 +210,9 @@ export default function AboutPage() {
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-10 gap-12 items-center">
             <div className="lg:col-span-4 space-y-8 animate-fade-in-up">
-              <div className="inline-block">
-                <div className="relative w-40 h-40">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary via-accent to-primary rounded-full blur-2xl opacity-60 animate-pulse" />
-                  <div className="relative w-full h-full bg-gradient-to-br from-primary via-accent to-primary rounded-full p-1 animate-gradient">
-                    <div className="w-full h-full bg-background rounded-full flex items-center justify-center text-6xl font-bold bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
-                      NĐ
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h1 className="text-5xl lg:text-6xl font-bold mb-4 text-balance leading-tight">
+              <ThreeDCard avatarSrc="/avatar.png" className="inline-block" />
+              {/* <div> */}
+              {/* <h1 className="text-5xl lg:text-6xl font-bold mb-4 text-balance leading-tight">
                   <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
                     Nguyễn Lê Xuân Đăng
                   </span>
@@ -241,8 +232,8 @@ export default function AboutPage() {
                 </span>
                 , luôn tìm tòi học hỏi các công nghệ mới và chia sẻ kiến thức
                 qua blog cá nhân.
-              </p>
-
+              </p> */}
+              <HeroDecryptingText />
               <div className="flex gap-4">
                 {[
                   {
