@@ -458,29 +458,43 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          Công Ty Mơ Ước
-        </h2>
-      </div>
-      <section className="py-6 overflow-hidden">
-        <div className="relative">
-          <div className="flex animate-scroll-left gap-12 items-center">
-            {[...techLogos, ...techLogos, ...techLogos].map((logo, i) => (
-              <div
-                key={i}
-                className="flex-shrink-0 grayscale hover:grayscale-0 transition-all opacity-50 hover:opacity-100"
-              >
-                <img
-                  src={logo.icon || "/placeholder.svg"}
-                  alt={logo.name}
-                  className="h-6 object-contain"
-                />
+      <div className="relative">
+        <section className="py-6 overflow-hidden">
+          <div className="relative">
+            {/* Tiêu đề được đặt lên trên cùng, căn giữa khung logo */}
+            <h2
+              className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 text-3xl md:text-4xl font-bold z-20 pointer-events-none
+                   bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+              aria-hidden="true"
+            >
+              Công Ty Mơ Ước
+            </h2>
+
+            {/* Wrapper với padding-top để đảm bảo logo không chồng trực tiếp lên chữ khi layout nhỏ */}
+            <div className="relative pt-24">
+              <div className="flex animate-scroll-left gap-12 items-center">
+                {[...techLogos, ...techLogos, ...techLogos].map((logo, i) => (
+                  <div
+                    key={i}
+                    className="flex-shrink-0 grayscale hover:grayscale-0 transition-all opacity-50 hover:opacity-100"
+                  >
+                    <img
+                      src={logo.icon || "/placeholder.svg"}
+                      alt={logo.name}
+                      className="h-6 object-contain"
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Một layer mờ nhẹ phía dưới chữ (tùy chọn) để cải thiện độ tương phản */}
+            {/* <div className="absolute inset-0 z-10 pointer-events-none">
+              <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-28 bg-gradient-to-t from-background/80 to-transparent" />
+            </div> */}
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
       <section className="py-24 bg-gradient-to-br from-background via-primary/5 to-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">

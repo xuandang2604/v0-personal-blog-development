@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "Nguyễn Lê Xuân Đăng - Blog Lập Trình Mạng",
   description: "Blog chia sẻ kiến thức về lập trình mạng với Java & JavaScript",
   generator: "v0.app",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -22,6 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta name="msapplication-TileImage" content="/favicon.ico" />
+      </head>
       <body
         className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
       >
