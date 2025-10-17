@@ -29,10 +29,10 @@ interface ThreeDCardProps {
 function ThreeDCard({
   children,
   className = "",
-  maxRotation = 120, // slightly larger by default
+  maxRotation = 120,
   glowOpacity = 0.32,
-  shadowBlur = 140, // stronger shadow blur
-  parallaxOffset = 160, // stronger parallax
+  shadowBlur = 140, 
+  parallaxOffset = 160, 
   transitionDuration = "0.36s",
   backgroundImage = null,
   enableGlow = true,

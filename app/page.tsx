@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import {
+  Dock,
   Facebook,
   Github,
   Instagram,
@@ -12,8 +13,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
-import { HeroDecryptingText } from "@/components/somethings/decrypting";
+import { HeroDecryptingText } from "@/components/somethings/Decrypting";
 import ThreeDCard from "@/components/somethings/ThreeDCard";
+import DockApp from "@/components/somethings/DocApp";
 
 export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -211,70 +213,11 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-10 gap-12 items-center">
             <div className="lg:col-span-4 space-y-8 animate-fade-in-up">
               <ThreeDCard avatarSrc="/avatar.png" className="inline-block" />
-              {/* <div> */}
-              {/* <h1 className="text-5xl lg:text-6xl font-bold mb-4 text-balance leading-tight">
-                  <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-                    Nguyễn Lê Xuân Đăng
-                  </span>
-                </h1>
-                <p className="text-2xl font-semibold text-primary mb-2">
-                  Lập Trình Viên
-                </p>
-                <p className="text-lg text-muted-foreground/90">
-                  Sinh viên năm cuối | Đại học HUTECH
-                </p>
-              </div>
 
-              <p className="text-lg text-foreground/80 leading-relaxed text-balance">
-                Đam mê với lập trình mạng và công nghệ. Chuyên về{" "}
-                <span className="text-primary font-semibold">
-                  lập trình mạng Java & JavaScript
-                </span>
-                , luôn tìm tòi học hỏi các công nghệ mới và chia sẻ kiến thức
-                qua blog cá nhân.
-              </p> */}
               <HeroDecryptingText />
               <div className="flex gap-4">
-                {[
-                  {
-                    icon: Facebook,
-                    href: "https://facebook.com",
-                    label: "Facebook",
-                  },
-                  {
-                    icon: Github,
-                    href: "https://github.com/xuandang2604",
-                    label: "GitHub",
-                  },
-                  {
-                    icon: Linkedin,
-                    href: "https://www.linkedin.com/in/nguyen-dang-172a03201/",
-                    label: "LinkedIn",
-                  },
-
-                  {
-                    icon: Instagram,
-                    href: "https://instagram.com",
-                    label: "Instagram",
-                  },
-                ].map((social, i) => (
-                  <a
-                    key={i}
-                    href={social.href}
-                    target={
-                      social.href.startsWith("http") ? "_blank" : undefined
-                    }
-                    rel={
-                      social.href.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    className="w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center transition-all hover:scale-110 hover:shadow-lg hover:shadow-primary/30"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="w-5 h-5 text-primary" />
-                  </a>
-                ))}
+                {/* social icons */}
+                <DockApp />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">

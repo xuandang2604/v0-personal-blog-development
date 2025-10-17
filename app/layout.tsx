@@ -1,13 +1,26 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Inter, Noto_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Suspense } from "react";
 import "./globals.css";
 import GlobalAudio from "@/components/GlobalAudio";
+
+const inter = Inter({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-inter",
+  weight: ["300", "400", "600", "700"],
+  display: "swap",
+});
+
+const noto = Noto_Sans({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-noto",
+  weight: ["400", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Nguyễn Lê Xuân Đăng - Blog Lập Trình Mạng",
@@ -33,7 +46,11 @@ export default function RootLayout({
         <meta name="msapplication-TileImage" content="/favicon.ico" />
       </head>
       <body
-        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased`}
+        className={`antialiased ${inter.variable} ${noto.variable}`}
+        style={{
+          fontFamily:
+            "var(--font-inter), var(--font-noto), system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
+        }}
       >
         <Suspense fallback={<div>Loading...</div>}>
           <Navigation />

@@ -13,6 +13,7 @@ import {
   Send,
 } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
+import DockApp from "@/components/somethings/DocApp";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -241,11 +242,23 @@ console.log("runtime:",Date.now())`;
                       <span>nguyenlexuandang2004@gmail.com</span>
                     </a>
                     <div className="flex gap-3 pt-2">
-                      {[
-                        { icon: Github, href: "https://github.com" },
-                        { icon: Linkedin, href: "https://linkedin.com" },
-                        { icon: Facebook, href: "https://facebook.com" },
-                        { icon: Instagram, href: "https://instagram.com" },
+                      {/* {[
+                        {
+                          icon: Github,
+                          href: "https://github.com/xuandang2604",
+                        },
+                        {
+                          icon: Linkedin,
+                          href: "https://www.linkedin.com/in/nguyen-dang-172a03201/",
+                        },
+                        {
+                          icon: Facebook,
+                          href: "https://facebook.com/nguyenlexuandangdeptraitailang",
+                        },
+                        {
+                          icon: Instagram,
+                          href: "https://instagram.com/xuandang2604",
+                        },
                       ].map((social, i) => (
                         <a
                           key={i}
@@ -256,7 +269,8 @@ console.log("runtime:",Date.now())`;
                         >
                           <social.icon className="w-5 h-5 text-primary" />
                         </a>
-                      ))}
+                      ))} */}
+                      <DockApp />
                     </div>
                   </div>
                 </div>
