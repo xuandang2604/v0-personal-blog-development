@@ -1,59 +1,43 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState } from "react";
-import {
-  Dock,
-  Facebook,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-  Volume2,
-  VolumeX,
-} from "lucide-react";
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
-import { HeroDecryptingText } from "@/components/somethings/Decrypting";
-import ThreeDCard from "@/components/somethings/ThreeDCard";
-import DockApp from "@/components/somethings/DocApp";
+import { useEffect, useRef, useState } from "react"
+import Link from "next/link"
+import { Card } from "@/components/ui/card"
+import { HeroDecryptingText } from "@/components/somethings/Decrypting"
+import ThreeDCard from "@/components/somethings/ThreeDCard"
+import DockApp from "@/components/somethings/DocApp"
 
 export default function AboutPage() {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [featuredIndex, setFeaturedIndex] = useState(7); // Random featured card on load
-  const [isMuted, setIsMuted] = useState(true);
-  const techStackRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [featuredIndex, setFeaturedIndex] = useState(7) // Random featured card on load
+  const [isMuted, setIsMuted] = useState(true)
+  const techStackRef = useRef<HTMLDivElement>(null)
   // useEffect(() => {
   //   const randomIndex = Math.floor(Math.random() * 15);
   //   setFeaturedIndex(randomIndex);
   // }, []);
 
   useEffect(() => {
-    const featureableTechs = [
-      "TypeScript",
-      "Java",
-      "JavaScript",
-      "C#",
-      "Node.js",
-    ];
+    const featureableTechs = ["TypeScript", "Java", "JavaScript", "C#", "Node.js"]
     const featureableIndexes = techStack
       .map((tech, index) => {
         // Tìm index của các card có tên nằm trong danh sách featureableTechs
         if (featureableTechs.includes(tech.name)) {
-          return index;
+          return index
         }
-        return null;
+        return null
       })
       // Lọc bỏ các giá trị null
-      .filter((index) => index !== null);
+      .filter((index) => index !== null)
 
     if (featureableIndexes.length > 0) {
       // Chọn một chỉ mục ngẫu nhiên từ danh sách đã lọc
-      const randomIndex = Math.floor(Math.random() * featureableIndexes.length);
-      setFeaturedIndex(featureableIndexes[randomIndex]);
+      const randomIndex = Math.floor(Math.random() * featureableIndexes.length)
+      setFeaturedIndex(featureableIndexes[randomIndex])
     }
-  }, []);
+  }, [])
 
   // useEffect(() => {
   //   // try to autoplay unmuted first; if blocked, fall back to muted autoplay
@@ -88,23 +72,20 @@ export default function AboutPage() {
   useEffect(() => {
     const handleScroll = () => {
       if (techStackRef.current) {
-        const rect = techStackRef.current.getBoundingClientRect();
-        const sectionHeight = techStackRef.current.offsetHeight;
-        const viewportHeight = window.innerHeight;
+        const rect = techStackRef.current.getBoundingClientRect()
+        const sectionHeight = techStackRef.current.offsetHeight
+        const viewportHeight = window.innerHeight
 
-        const scrolled = -rect.top;
-        const progress = Math.max(
-          0,
-          Math.min(1, scrolled / (sectionHeight - viewportHeight))
-        );
-        setScrollProgress(progress);
+        const scrolled = -rect.top
+        const progress = Math.max(0, Math.min(1, scrolled / (sectionHeight - viewportHeight)))
+        setScrollProgress(progress)
       }
-    };
+    }
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll)
+    handleScroll()
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const techStack = [
     { name: "Python", icon: "/icons/python.jpg" },
@@ -140,7 +121,7 @@ export default function AboutPage() {
       name: "Dart",
       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
     },
-  ];
+  ]
 
   const techLogos = [
     {
@@ -175,10 +156,10 @@ export default function AboutPage() {
       name: "Oracle",
       icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg",
     },
-  ];
+  ]
 
-  const centerRow = 1; // Middle row (0-indexed)
-  const centerCol = 2; // Middle column (0-indexed)
+  const centerRow = 1 // Middle row (0-indexed)
+  const centerCol = 2 // Middle column (0-indexed)
 
   return (
     <main className="min-h-screen bg-background">
@@ -256,32 +237,26 @@ export default function AboutPage() {
               <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Ngôn Ngữ Lập Trình
               </h2>
-              <p className="text-muted-foreground mt-2">
-                Các công nghệ tôi sử dụng
-              </p>
+              <p className="text-muted-foreground mt-2">Các công nghệ tôi sử dụng</p>
             </div>
 
             <div className="grid grid-cols-5 gap-3 md:gap-4">
               {techStack.map((tech, index) => {
-                const isFeatured = index === featuredIndex;
-                const initialScale = 0.7;
-                const zoomFactor = 4;
+                const isFeatured = index === featuredIndex
+                const initialScale = 0.7
+                const zoomFactor = 4
 
                 const scale = isFeatured
                   ? initialScale + scrollProgress * zoomFactor
-                  : initialScale - scrollProgress * 0.4;
-                const opacity = isFeatured
-                  ? 1
-                  : Math.max(0, 1 - scrollProgress * 3);
-                const zIndex = isFeatured
-                  ? 50
-                  : 10 - Math.abs(index - featuredIndex);
+                  : initialScale - scrollProgress * 0.4
+                const opacity = isFeatured ? 1 : Math.max(0, 1 - scrollProgress * 3)
+                const zIndex = isFeatured ? 50 : 10 - Math.abs(index - featuredIndex)
 
-                let gridColumn = "";
-                let gridRow = "";
+                let gridColumn = ""
+                let gridRow = ""
                 if (isFeatured && scrollProgress > 0.3) {
-                  gridColumn = "3";
-                  gridRow = "2";
+                  gridColumn = "3"
+                  gridRow = "2"
                 }
 
                 return (
@@ -296,22 +271,17 @@ export default function AboutPage() {
                       zIndex: zIndex,
                       gridColumn: gridColumn,
                       gridRow: gridRow,
-                      transition:
-                        "transform 0.3s ease-out, opacity 0.3s ease-out",
+                      transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
                     }}
                   >
                     <Card
                       className={`group relative overflow-hidden aspect-square w-full flex flex-col items-center justify-center p-2 md:p-3 ${
-                        isFeatured
-                          ? "shadow-2xl shadow-primary/50 border-2 border-primary"
-                          : "hover:shadow-xl"
+                        isFeatured ? "shadow-2xl shadow-primary/50 border-2 border-primary" : "hover:shadow-xl"
                       } transition-all duration-300`}
                     >
                       <div
                         className={`absolute inset-0 bg-gradient-to-br ${
-                          isFeatured
-                            ? "from-primary/20 to-accent/20"
-                            : "from-primary/5 to-accent/5"
+                          isFeatured ? "from-primary/20 to-accent/20" : "from-primary/5 to-accent/5"
                         } opacity-0 group-hover:opacity-100 transition-opacity`}
                       />
                       <img
@@ -319,11 +289,7 @@ export default function AboutPage() {
                         alt={tech.name}
                         className="w-8 h-8 md:w-12 md:h-12 object-contain mb-1 md:mb-2 transform group-hover:scale-110 transition-transform"
                       />
-                      <h3
-                        className={`font-bold text-center text-xs md:text-sm ${
-                          isFeatured ? "text-primary" : ""
-                        }`}
-                      >
+                      <h3 className={`font-bold text-center text-xs md:text-sm ${isFeatured ? "text-primary" : ""}`}>
                         {tech.name}
                       </h3>
                       {isFeatured && scrollProgress > 0.6 && (
@@ -335,7 +301,7 @@ export default function AboutPage() {
                       )}
                     </Card>
                   </div>
-                );
+                )
               })}
             </div>
           </div>
@@ -383,9 +349,7 @@ export default function AboutPage() {
                 <div className="relative p-5 text-center">
                   <div className="text-4xl mb-3">{skill.icon}</div>
                   <h3 className="text-lg font-bold mb-2">{skill.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    {skill.desc}
-                  </p>
+                  <p className="text-muted-foreground leading-relaxed text-sm">{skill.desc}</p>
                 </div>
               </Card>
             ))}
@@ -412,11 +376,7 @@ export default function AboutPage() {
                     key={i}
                     className="flex-shrink-0 grayscale hover:grayscale-0 transition-all opacity-50 hover:opacity-100"
                   >
-                    <img
-                      src={logo.icon || "/placeholder.svg"}
-                      alt={logo.name}
-                      className="h-6 object-contain"
-                    />
+                    <img src={logo.icon || "/placeholder.svg"} alt={logo.name} className="h-6 object-contain" />
                   </div>
                 ))}
               </div>
@@ -435,9 +395,7 @@ export default function AboutPage() {
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Kinh Nghiệm Làm Việc
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Hành trình học tập và phát triển của tôi
-            </p>
+            <p className="text-lg text-muted-foreground">Hành trình học tập và phát triển của tôi</p>
           </div>
 
           <div className="relative">
@@ -513,11 +471,7 @@ export default function AboutPage() {
               ].map((exp, i) => (
                 <div
                   key={i}
-                  className={`relative ${
-                    exp.side === "right"
-                      ? "md:ml-auto md:pl-8"
-                      : "md:mr-auto md:pr-8"
-                  } md:w-1/2`}
+                  className={`relative ${exp.side === "right" ? "md:ml-auto md:pl-8" : "md:mr-auto md:pr-8"} md:w-1/2`}
                 >
                   <div
                     className={`absolute top-8 ${
@@ -537,45 +491,29 @@ export default function AboutPage() {
                     <div className="p-6">
                       <div
                         className={`flex items-start ${
-                          exp.side === "left"
-                            ? "md:flex-row-reverse"
-                            : "flex-row"
+                          exp.side === "left" ? "md:flex-row-reverse" : "flex-row"
                         } justify-between mb-3 gap-4`}
                       >
-                        <div
-                          className={exp.side === "left" ? "md:text-right" : ""}
-                        >
+                        <div className={exp.side === "left" ? "md:text-right" : ""}>
                           <h3 className="text-xl md:text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
                             {exp.title}
                           </h3>
-                          <p className="text-base text-muted-foreground font-semibold">
-                            {exp.company}
-                          </p>
+                          <p className="text-base text-muted-foreground font-semibold">{exp.company}</p>
                         </div>
                         <span className="text-xs md:text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full whitespace-nowrap">
                           {exp.period}
                         </span>
                       </div>
 
-                      <div
-                        className={`space-y-2 mt-4 ${
-                          exp.side === "left" ? "md:text-right" : ""
-                        }`}
-                      >
-                        <p className="text-sm font-semibold text-muted-foreground italic">
-                          Trách nhiệm
-                        </p>
+                      <div className={`space-y-2 mt-4 ${exp.side === "left" ? "md:text-right" : ""}`}>
+                        <p className="text-sm font-semibold text-muted-foreground italic">Trách nhiệm</p>
                         {exp.responsibilities.map((resp, j) => (
                           <div
                             key={j}
-                            className={`flex items-start gap-2 ${
-                              exp.side === "left" ? "md:flex-row-reverse" : ""
-                            }`}
+                            className={`flex items-start gap-2 ${exp.side === "left" ? "md:flex-row-reverse" : ""}`}
                           >
                             <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                            <p className="text-muted-foreground text-sm">
-                              {resp}
-                            </p>
+                            <p className="text-muted-foreground text-sm">{resp}</p>
                           </div>
                         ))}
                       </div>
@@ -588,5 +526,5 @@ export default function AboutPage() {
         </div>
       </section>
     </main>
-  );
+  )
 }
