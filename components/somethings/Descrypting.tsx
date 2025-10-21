@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const CHARACTERS =
@@ -7,13 +8,10 @@ const CHARACTERS =
 
 interface DecryptingTextProps {
   targetText: string;
-  speed?: number; // smaller => faster
+  speed?: number;
   className?: string;
 }
 
-/**
- * Inline decrypting text (returns a span to avoid nested <p> issues)
- */
 const DecryptingText: React.FC<DecryptingTextProps> = ({
   targetText,
   speed = 2,
@@ -30,7 +28,7 @@ const DecryptingText: React.FC<DecryptingTextProps> = ({
     let animationFrameId: number | null = null;
     let iteration = 0;
     let isMounted = true;
-    const animationSpeed = Math.max(1, speed); // smaller = reveal faster
+    const animationSpeed = Math.max(1, speed);
 
     const scramble = () => {
       if (!isMounted) return;
@@ -56,7 +54,6 @@ const DecryptingText: React.FC<DecryptingTextProps> = ({
       }
     };
 
-    // start
     scramble();
 
     return () => {
@@ -78,17 +75,13 @@ const DecryptingText: React.FC<DecryptingTextProps> = ({
   );
 };
 
-/**
- * Hero wrapper that matches your original markup and decrypts every text piece.
- * Use <HeroDecryptingText /> in page.tsx (line ~224).
- */
 export const HeroDecryptingText: React.FC<{
   name?: string;
   role?: string;
   subtitle?: string;
 }> = ({
   name = "Nguyễn Lê Xuân Đăng",
-  role = "Lập Trình Viên",
+  role = "Lập Trình Viên Mạng",
   subtitle = "Sinh viên năm cuối | Đại học HUTECH",
 }) => {
   const preParagraph = "Đam mê với lập trình mạng và công nghệ. Chuyên về ";
