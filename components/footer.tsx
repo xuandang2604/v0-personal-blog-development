@@ -1,4 +1,4 @@
-import { Code2, Github, Linkedin, Facebook, Instagram } from "lucide-react";
+import { Code2, Facebook, Github, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 export function Footer() {
@@ -87,7 +87,7 @@ export function Footer() {
                 { label: "Trang Chủ", href: "/" },
                 { label: "Chuyên Môn", href: "/expertise" },
                 { label: "Bài Viết", href: "/blog" },
-                { label: "Liên Hệ", href: "/contact" },
+                { label: "Liên Hệ Với Tôi", href: "/contact" },
               ].map((link, i) => (
                 <li key={i}>
                   <Link
@@ -103,12 +103,14 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-semibold mb-4 text-foreground/90">Thông Tin</h3>
+            <h3 className="font-semibold mb-4 text-foreground/90">
+              Thông Tin Cá Nhân
+            </h3>
             <ul className="space-y-2 text-muted-foreground">
-              <li>📧 nguyenlexuandang2004@gmail.com</li>
-              <li>📱 0987654321</li>
-              <li>🎓 HUTECH University</li>
-              <li>📍 Ho Chi Minh City, Vietnam</li>
+              <li>nguyenlexuandang2004@gmail.com</li>
+              <li>0987654321</li>
+              <li>HUTECH University</li>
+              <li>Ho Chi Minh City, Vietnam</li>
             </ul>
           </div>
         </div>

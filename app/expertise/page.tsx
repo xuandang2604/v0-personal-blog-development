@@ -133,13 +133,13 @@ export default function ExpertisePage() {
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed">
-            Chuyên về{" "}
+            Chuyên Về{" "}
             <span className="text-primary font-semibold">
               Lập Trình Mạng Java
             </span>
             , <span className="text-accent font-semibold">TypeScript</span> &{" "}
-            <span className="text-accent font-semibold">Node.js</span> để xây
-            dựng hệ thống phân tán có khả năng mở rộng
+            <span className="text-accent font-semibold">Node.js</span> Để Xây
+            Dựng Hệ Thống Phân Tán Có Khả Năng Mở Rộng
           </p>
         </div>
       </section>
@@ -218,7 +218,7 @@ export default function ExpertisePage() {
                 Chuyên Môn Lập Trình Mạng
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Năng lực cốt lõi trong xây dựng hệ thống phân tán và mạng
+                Năng Lực Cốt Lõi Trong Xây Dựng Hệ Thống Phân Tán Và Mạng
               </p>
             </div>
 
@@ -265,7 +265,7 @@ export default function ExpertisePage() {
                 Công Nghệ Hỗ Trợ
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Các công cụ và framework bổ sung cho phát triển full-stack
+                Các Công Cụ và Framework Bổ Sung Cho Phát Triển Full-Stack
               </p>
             </div>
 
@@ -328,7 +328,7 @@ export default function ExpertisePage() {
                 Chứng Chỉ & Thành Tích
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Chứng chỉ chuyên môn và sự công nhận
+                Chứng Chỉ Chuyên Môn và Sự Công Nhận
               </p>
             </div>
 
@@ -359,14 +359,14 @@ export default function ExpertisePage() {
             Khám Phá Các Bài Viết Kỹ Thuật
           </h2>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-            Đọc các hướng dẫn và bài viết chuyên sâu về lập trình mạng với Java,
+            Đọc Các Hướng Dẫn và Bài Viết Chuyên Sâu Về Lập Trình Mạng Với Java,
             TypeScript và Node.js
           </p>
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-primary/50 transition-all hover:scale-105"
           >
-            Xem Bài Viết Blog
+            Xem Các Bài Viết
             <ArrowRight className="w-6 h-6" />
           </Link>
         </div>

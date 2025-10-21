@@ -1,22 +1,136 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { Card } from "@/components/ui/card";
 import { HeroDecryptingText } from "@/components/somethings/Descrypting";
-import ThreeDCard from "@/components/somethings/ThreeDCard";
 import DockApp from "@/components/somethings/DocApp";
-import { motion } from "framer-motion";
+import ThreeDCard from "@/components/somethings/ThreeDCard";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const particlesRef = useRef<HTMLCanvasElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [featuredIndex, setFeaturedIndex] = useState(7); // Random featured card on load
   const [isMuted, setIsMuted] = useState(true);
   const techStackRef = useRef<HTMLDivElement>(null);
+
+  // particle background (3D-like moving "electrons")
+  useEffect(() => {
+    const canvas = particlesRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let raf = 0;
+    let particles: {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      r: number;
+      hue: number;
+    }[] = [];
+
+    const DPR = Math.max(1, window.devicePixelRatio || 1);
+
+    const resize = () => {
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      canvas.width = Math.floor(w * DPR);
+      canvas.height = Math.floor(h * DPR);
+      if (ctx) ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    };
+
+    const init = () => {
+      const count = Math.max(
+        30,
+        Math.floor((canvas.clientWidth * canvas.clientHeight) / 40000)
+      );
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * canvas.clientWidth,
+          y: Math.random() * canvas.clientHeight,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: (Math.random() - 0.5) * 0.6,
+          r: 0.8 + Math.random() * 2.2,
+          hue: 180 + Math.random() * 160,
+        });
+      }
+    };
+
+    const draw = () => {
+      if (!ctx) return;
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+
+      // subtle base wash
+      ctx.clearRect(0, 0, w, h);
+      const g = ctx.createLinearGradient(0, 0, w, h);
+      g.addColorStop(0, "rgba(8,10,20,0.02)");
+      g.addColorStop(1, "rgba(99,102,241,0.02)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+
+      // particles glow
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < -20) p.x = w + 20;
+        if (p.x > w + 20) p.x = -20;
+        if (p.y < -20) p.y = h + 20;
+        if (p.y > h + 20) p.y = -20;
+
+        const glow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 8);
+        glow.addColorStop(0, `hsla(${p.hue}, 90%, 60%, 0.9)`);
+        glow.addColorStop(0.2, `hsla(${p.hue}, 90%, 60%, 0.28)`);
+        glow.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // connect nearby particles (thin lines)
+      ctx.lineWidth = 0.4;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i];
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            const alpha = 1 - dist / 120;
+            ctx.strokeStyle = `rgba(140,200,255,${alpha * 0.18})`;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      raf = requestAnimationFrame(draw);
+    };
+
+    const onResize = () => {
+      resize();
+      init();
+    };
+
+    resize();
+    init();
+    raf = requestAnimationFrame(draw);
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, []);
 
   useEffect(() => {
     const featureableTechs = [
@@ -450,11 +564,20 @@ export default function AboutPage() {
           </div>
         </section>
       </div>
-      <section className="relative py-32 bg-gradient-to-b from-background via-primary/5 to-background overflow-hidden">
-        {/* Cinematic background */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,theme(colors.accent/10),transparent_70%)] animate-pulse opacity-70 pointer-events-none" />
-        <div className="absolute inset-0 network-animation opacity-20 mix-blend-screen pointer-events-none" />
 
+      <section className="relative z-10 py-32 overflow-hidden">
+        {/* === BACKGROUND LAYER === */}
+        <div className="absolute inset-0 z-0">
+          <div className="network-animation opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-accent/10 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_20%,theme(colors.primary/15),transparent_70%)]" />
+
+          {/* Large color orbs for depth */}
+          <div className="absolute -left-40 -top-20 w-[680px] h-[680px] rounded-full bg-primary/30 blur-3xl opacity-90" />
+          <div className="absolute -right-40 bottom-0 w-[600px] h-[600px] rounded-full bg-accent/25 blur-3xl opacity-90" />
+        </div>
+
+        {/* === TIMELINE CONTENT === */}
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           {/* Header */}
           <motion.div
@@ -467,14 +590,14 @@ export default function AboutPage() {
               Hành Trình Phát Triển
             </h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Mỗi bước đi là một cột mốc — đây là hành trình tôi học, sáng tạo
-              và trưởng thành cùng công nghệ.
+              Mỗi Dòng Code Là Một Bước Tiến Tới Ước Mơ
             </p>
           </motion.div>
 
-          {/* Timeline line */}
+          {/* Timeline */}
           <div className="relative flex flex-col items-center">
-            <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-accent via-primary to-transparent blur-[1px] shadow-[0_0_10px_rgba(255,255,255,0.2)] animate-pulse" />
+            {/* Đường trục timeline */}
+            <div className="absolute left-1/2 top-0 w-[4px] h-full bg-gradient-to-b from-accent/60 via-primary/70 to-transparent blur-sm animate-pulse" />
 
             <div className="w-full flex flex-col gap-32">
               {timeline.map((exp, i) => (
@@ -516,6 +639,16 @@ export default function AboutPage() {
                     )}
                   >
                     <Card className="border-none shadow-none bg-transparent">
+                      {/* moving light reflection */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-50 pointer-events-none"
+                        animate={{ x: ["-100%", "100%"] }}
+                        transition={{
+                          repeat: Infinity,
+                          duration: 3,
+                          ease: "easeInOut",
+                        }}
+                      />
                       <div className="p-8">
                         <div className="flex items-center justify-between mb-3">
                           <h3
@@ -545,7 +678,7 @@ export default function AboutPage() {
                           ))}
                         </ul>
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none" />
                     </Card>
                   </motion.div>
 
@@ -587,13 +720,13 @@ export default function AboutPage() {
             className="text-center mt-40"
           >
             <p className="text-lg text-muted-foreground mb-8">
-              Hành trình vẫn tiếp tục — tôi luôn tìm kiếm những thử thách mới.
+              Hành Trình Vẫn Tiếp Tục — Tôi Luôn Tìm Kiếm Những Thử Thách Mới.
             </p>
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-bold text-lg hover:shadow-[0_0_25px_var(--accent)] hover:scale-110 transition-all"
             >
-              Kết nối cùng tôi
+              Kết Nối Với Tôi
               <ArrowRight className="w-6 h-6" />
             </Link>
           </motion.div>
