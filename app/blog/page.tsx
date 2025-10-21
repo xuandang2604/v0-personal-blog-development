@@ -25,16 +25,16 @@ export default function BlogPage() {
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6 animate-fade-in-up">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6 animate-fade-in-up">
             <TrendingUp className="w-4 h-4 text-primary" />
             <span className="text-sm font-semibold text-primary">
               100M+ Views Target
             </span>
-          </div>
+          </div> */}
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight animate-fade-in-up">
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-              Technical Blog
+              Bài Viết Về Lập Trình Mạng
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance leading-relaxed animate-fade-in-up">

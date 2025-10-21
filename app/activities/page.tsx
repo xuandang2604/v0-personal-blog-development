@@ -1,160 +1,195 @@
 "use client";
 
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Trophy, Star, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Trophy, Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function ActivitiesPage() {
   const activities = [
     {
-      title: "Bóng đá",
-      period: "2022 - Hiện tại",
-      icon: "⚽",
-      color: "from-green-500 to-emerald-500",
+      title: "Bóng Đá",
+      period: "2022 - Nay",
+      color: "from-green-500 via-emerald-400 to-lime-500",
       description:
-        "Thành viên đội bóng đá khoa, tham gia các giải đấu nội bộ trường",
-      achievements: [
-        "Vô địch giải bóng đá khoa 2023",
-        "Cầu thủ xuất sắc nhất tháng 10/2023",
-      ],
+        "Sân cỏ là nơi tôi bùng nổ năng lượng, học cách kết nối và dẫn dắt đồng đội. Mỗi trận đấu là một hành trình chinh phục.",
+      achievements: ["Vô địch khoa 2023", "Cầu thủ xuất sắc tháng 10/2023"],
       image: "/activities/act1.png",
     },
     {
-      title: "Hoạt động tình nguyện",
-      period: "2023 - Hiện tại",
-      icon: "❤️",
-      color: "from-red-500 to-pink-500",
-      description: "Tham gia các hoạt động từ thiện và tình nguyện cộng đồng",
+      title: "Tình Nguyện",
+      period: "2023 - Nay",
+      color: "from-rose-500 via-pink-500 to-fuchsia-500",
+      description:
+        "Tôi yêu việc lan tỏa năng lượng tích cực qua các hoạt động thiện nguyện — mỗi lần giúp đỡ ai đó là một lần mình trưởng thành hơn.",
       achievements: [
-        "Tình nguyện viên xuất sắc 2023",
-        "Tham gia 15+ hoạt động từ thiện",
+        "Tình nguyện viên tiêu biểu 2023",
+        "Tham gia 15+ dự án cộng đồng",
       ],
       image: "/activities/act2.png",
     },
     {
-      title: "Câu lạc bộ Lập trình",
-      period: "2022 - Hiện tại",
-      icon: "💻",
-      color: "from-blue-500 to-cyan-500",
-      description: "Thành viên tích cực của CLB Lập trình HUTECH",
+      title: "Lập trình",
+      period: "2022 - Nay",
+      color: "from-sky-500 via-blue-500 to-cyan-400",
+      description:
+        "Công nghệ giúp tôi thể hiện tư duy sáng tạo. Tôi thích khám phá, dẫn dắt và truyền cảm hứng qua từng dòng code.",
       achievements: [
-        "Đội trưởng nhóm dự án mã nguồn mở",
-        "Mentor cho sinh viên năm nhất",
+        "Đội trưởng dự án Open Source",
+        "Mentor kỹ thuật năm nhất",
       ],
       image: "/activities/act3.png",
     },
     {
-      title: "Chạy bộ & Gym",
-      period: "2023 - Hiện tại",
-      icon: "🏃",
-      color: "from-orange-500 to-red-500",
-      description: "Duy trì thói quen tập luyện thể thao đều đặn",
-      achievements: ["Hoàn thành Half Marathon 2024", "Tập gym 5 ngày/tuần"],
+      title: "Chạy bộ",
+      period: "2023 - Nay",
+      color: "from-amber-500 via-orange-500 to-red-500",
+      description:
+        "Chạy giúp tôi duy trì kỷ luật, năng lượng và tinh thần thép. Mỗi bước chạy là một lần vượt qua chính mình.",
+      achievements: ["Half Marathon 2024", "Tập luyện 5 buổi/tuần"],
       image: "/activities/act4.png",
     },
   ];
 
   return (
-    <main className="min-h-screen bg-background">
-      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-primary/20 via-accent/10 to-background">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-primary/40 rounded-full blur-3xl animate-pulse" />
-          <div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-accent/40 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-          />
-        </div>
+    <main className="relative min-h-screen bg-background text-foreground overflow-hidden">
+      {/* === BACKGROUND LAYER === */}
+      <div className="absolute inset-0 z-0">
+        <div className="network-animation opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-accent/10 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_20%,theme(colors.primary/15),transparent_70%)]" />
+      </div>
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance">
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
-              Hoạt Động & Sở Thích
-            </span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto text-balance">
-            Khám phá các hoạt động thể thao, tình nguyện và sở thích của tôi
-          </p>
-        </div>
+      {/* === HERO === */}
+      <section className="relative z-10 py-24 text-center">
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-6xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient"
+        >
+          Tôi Là Người Hành Động
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+        >
+          Đam mê – Nhiệt huyết – Sáng tạo – Tinh thần không giới hạn.
+        </motion.p>
       </section>
 
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-16">
-            {activities.map((activity, index) => (
-              <div
-                key={index}
-                className={`grid lg:grid-cols-2 gap-8 items-center ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}
+      {/* === TIMELINE SECTION === */}
+      <section className="relative z-10 py-32 overflow-hidden">
+        <div className="absolute left-1/2 top-0 w-[4px] h-full bg-gradient-to-b from-accent/60 via-primary/70 to-transparent blur-sm hidden lg:block animate-pulse" />
+
+        <div className="max-w-6xl mx-auto space-y-44 px-6 sm:px-8">
+          {activities.map((act, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: i * 0.1 }}
+              viewport={{ once: true }}
+              className={cn(
+                "relative grid lg:grid-cols-2 gap-16 items-center group",
+                i % 2 === 1 && "lg:flex-row-reverse"
+              )}
+            >
+              {/* === IMAGE 3D + LIGHT === */}
+              <motion.div
+                whileHover={{ scale: 1.05, rotateY: i % 2 ? -5 : 5 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                className="relative perspective-1000"
               >
-                <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                  <Card className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300">
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${activity.color} opacity-0 group-hover:opacity-10 transition-opacity`}
-                    />
-                    <div className="relative aspect-video">
-                      <img
-                        src={activity.image || "/placeholder.svg"}
-                        alt={activity.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  </Card>
-                </div>
-
-                <div className={index % 2 === 1 ? "lg:order-1" : ""}>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${activity.color} flex items-center justify-center text-3xl`}
-                      >
-                        {activity.icon}
-                      </div>
-                      <div>
-                        <h2 className="text-3xl md:text-4xl font-bold">
-                          {activity.title}
-                        </h2>
-                        <p className="text-muted-foreground">
-                          {activity.period}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      {activity.description}
-                    </p>
-
-                    <div className="space-y-2">
-                      <h3 className="font-semibold text-lg flex items-center gap-2">
-                        <Trophy className="w-5 h-5 text-primary" />
-                        Thành tích
-                      </h3>
-                      {activity.achievements.map((achievement, i) => (
-                        <div key={i} className="flex items-start gap-2">
-                          <Star className="w-4 h-4 text-accent mt-1 flex-shrink-0" />
-                          <p className="text-muted-foreground">{achievement}</p>
-                        </div>
-                      ))}
-                    </div>
+                <Card className="overflow-hidden rounded-3xl shadow-2xl border border-border/20 bg-card relative">
+                  {/* moving light reflection */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-50"
+                    animate={{ x: ["-100%", "100%"] }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3,
+                      ease: "easeInOut",
+                    }}
+                  />
+                  <img
+                    src={act.image}
+                    alt={act.title}
+                    className="w-full h-[420px] object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-tr ${act.color} opacity-20 group-hover:opacity-40 transition-opacity`}
+                  />
+                  <div className="absolute bottom-4 left-4 bg-background/70 backdrop-blur-sm px-3 py-1 rounded-md text-xs font-medium border border-border/40">
+                    {act.period}
                   </div>
+                </Card>
+              </motion.div>
+
+              {/* === TEXT SIDE === */}
+              <motion.div
+                initial={{ opacity: 0, x: i % 2 === 0 ? -60 : 60 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-6"
+              >
+                <h2
+                  className={`text-4xl md:text-5xl font-extrabold bg-gradient-to-r ${act.color} bg-clip-text text-transparent`}
+                >
+                  {act.title}
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed border-l-4 border-primary/50 pl-4 italic tracking-wide hover:text-foreground transition-colors">
+                  {act.description}
+                </p>
+
+                <div className="pt-3">
+                  <h3 className="text-primary font-semibold text-base flex items-center gap-2 mb-2">
+                    <Trophy className="w-4 h-4" /> Thành tích nổi bật
+                  </h3>
+                  <ul className="space-y-1">
+                    {act.achievements.map((a, j) => (
+                      <li
+                        key={j}
+                        className="flex items-start gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Star className="w-3 h-3 text-accent mt-1 flex-shrink-0" />
+                        {a}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            ))}
-          </div>
+              </motion.div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Cân Bằng Là Chìa Khóa
+      {/* === CTA SECTION === */}
+      <section className="relative z-10 py-32 bg-gradient-to-tr from-primary/10 via-accent/10 to-background text-center overflow-hidden">
+        <div className="absolute inset-0 network-animation opacity-40" />
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto px-6 relative z-20"
+        >
+          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-primary via-accent to-fuchsia-500 bg-clip-text text-transparent animate-gradient">
+            “Cân Bằng Là Sức Mạnh.”
           </h2>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            Tôi tin rằng sự cân bằng giữa công việc, học tập và các hoạt động
-            ngoại khóa là chìa khóa để phát triển toàn diện. Các hoạt động này
-            giúp tôi duy trì sức khỏe, kết nối với cộng đồng và phát triển kỹ
-            năng mềm.
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10">
+            Đam Mê - Hành Động - Cống Hiến
           </p>
-        </div>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-xl font-bold text-lg hover:shadow-[0_0_30px_var(--accent)] hover:scale-110 transition-all"
+          >
+            Liên hệ với tôi
+            <ArrowRight className="w-6 h-6" />
+          </Link>
+        </motion.div>
       </section>
     </main>
   );
