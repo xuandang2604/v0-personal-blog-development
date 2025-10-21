@@ -218,6 +218,18 @@
     }
   }
 
+  @keyframes floatDust {
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-30px) translateX(20px);
+      opacity: 1;
+    }
+  }
+
   .network-animation {
     background-image: radial-gradient(
         circle at 20% 30%,
@@ -320,5 +332,17 @@
 
   .animate-scroll-left:hover {
     animation-play-state: paused;
+  }
+
+  .network-animation::before {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    animation: floatDust 10s ease-in-out infinite;
   }
 }

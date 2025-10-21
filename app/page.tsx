@@ -6,6 +6,9 @@ import { Card } from "@/components/ui/card";
 import { HeroDecryptingText } from "@/components/somethings/Descrypting";
 import ThreeDCard from "@/components/somethings/ThreeDCard";
 import DockApp from "@/components/somethings/DocApp";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 
 export default function AboutPage() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -14,10 +17,6 @@ export default function AboutPage() {
   const [featuredIndex, setFeaturedIndex] = useState(7); // Random featured card on load
   const [isMuted, setIsMuted] = useState(true);
   const techStackRef = useRef<HTMLDivElement>(null);
-  // useEffect(() => {
-  //   const randomIndex = Math.floor(Math.random() * 15);
-  //   setFeaturedIndex(randomIndex);
-  // }, []);
 
   useEffect(() => {
     const featureableTechs = [
@@ -44,36 +43,6 @@ export default function AboutPage() {
       setFeaturedIndex(featureableIndexes[randomIndex]);
     }
   }, []);
-
-  // useEffect(() => {
-  //   // try to autoplay unmuted first; if blocked, fall back to muted autoplay
-  //   const a = audioRef.current;
-  //   if (!a) return;
-  //   a.volume = 0.18;
-  //   const tryPlay = async () => {
-  //     try {
-  //       a.muted = false;
-  //       await a.play();
-  //       setIsPlaying(true);
-  //       setIsMuted(false);
-  //     } catch {
-  //       // unmuted autoplay blocked -> try muted autoplay
-  //       try {
-  //         a.muted = true;
-  //         await a.play();
-  //         setIsPlaying(true);
-  //         setIsMuted(true);
-  //       } catch {
-  //         setIsPlaying(false);
-  //         setIsMuted(true);
-  //       }
-  //     }
-  //   };
-  //   tryPlay();
-  //   return () => {
-  //     if (audioRef.current) audioRef.current.pause();
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -167,6 +136,73 @@ export default function AboutPage() {
     },
   ];
 
+  const timeline = [
+    {
+      title: "Bắt đầu học lập trình",
+      company: "Đại học HUTECH",
+      period: "09/2022 - 12/2022",
+      icon: "🎓",
+      color: "from-blue-500 via-cyan-400 to-emerald-400",
+      description:
+        "Khởi đầu hành trình lập trình. Làm quen với C, C++, Java và thuật toán – học cách tư duy như một kỹ sư thật thụ.",
+      highlights: [
+        "Tham gia workshop lập trình đầu tiên.",
+        "Tự viết chương trình console và mini game.",
+      ],
+    },
+    {
+      title: "Dự án Web đầu tiên",
+      company: "Đại học HUTECH",
+      period: "03/2023 - 06/2023",
+      icon: "🌐",
+      color: "from-green-500 via-emerald-400 to-lime-400",
+      description:
+        "Xây dựng website quản lý thư viện đầu tay. Tôi học cách kết nối HTML, CSS, JS và database MySQL thành một sản phẩm thực tế.",
+      highlights: [
+        "Áp dụng responsive design.",
+        "Triển khai giao diện hiện đại đầu tiên.",
+      ],
+    },
+    {
+      title: "Dự án Lập trình Mạng",
+      company: "Đại học HUTECH",
+      period: "09/2023 - 12/2023",
+      icon: "🔌",
+      color: "from-orange-400 via-amber-400 to-red-500",
+      description:
+        "Tôi thử thách bản thân với Java Socket Programming – học cách các gói tin di chuyển và tạo ra một hệ thống chat real-time.",
+      highlights: [
+        "Xây dựng chat room hỗ trợ nhiều client.",
+        "Hiểu sâu cơ chế TCP/UDP trong thực tế.",
+      ],
+    },
+    {
+      title: "Thực tập sinh Frontend",
+      company: "Hostinger",
+      period: "06/2024 - 09/2024",
+      icon: "💼",
+      color: "from-purple-500 via-fuchsia-500 to-pink-500",
+      description:
+        "Chính thức bước ra môi trường doanh nghiệp. Code ReactJS thật, teamwork thật, deadline thật — nhưng cũng là lúc tôi phát triển nhanh nhất.",
+      highlights: [
+        "Tối ưu UX/UI theo feedback mentor.",
+        "Làm việc nhóm với Git, Trello, Figma.",
+      ],
+    },
+    {
+      title: "Dự án Web nâng cao",
+      company: "Đại học HUTECH",
+      period: "09/2024 - 12/2024",
+      icon: "🚀",
+      color: "from-cyan-400 via-blue-400 to-indigo-500",
+      description:
+        "Full-stack NodeJS & MongoDB. Tôi học cách kết nối backend và frontend thành một thể thống nhất – mạnh mẽ và tinh gọn.",
+      highlights: [
+        "Implement RESTful API & WebSocket.",
+        "Áp dụng clean code và bảo mật.",
+      ],
+    },
+  ];
   const centerRow = 1; // Middle row (0-indexed)
   const centerCol = 2; // Middle column (0-indexed)
 
@@ -221,7 +257,7 @@ export default function AboutPage() {
                   href="/blog"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-primary/50 text-foreground rounded-lg font-bold hover:bg-primary/10 transition-all hover:scale-105"
                 >
-                  Đọc Blog
+                  Đọc Bài Viết
                 </Link>
               </div>
             </div>
@@ -411,170 +447,156 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
-
-            {/* Một layer mờ nhẹ phía dưới chữ (tùy chọn) để cải thiện độ tương phản */}
-            {/* <div className="absolute inset-0 z-10 pointer-events-none">
-              <div className="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 h-28 bg-gradient-to-t from-background/80 to-transparent" />
-            </div> */}
           </div>
         </section>
       </div>
-      <section className="py-24 bg-gradient-to-br from-background via-primary/5 to-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Kinh Nghiệm Làm Việc
+      <section className="relative py-32 bg-gradient-to-b from-background via-primary/5 to-background overflow-hidden">
+        {/* Cinematic background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,theme(colors.accent/10),transparent_70%)] animate-pulse opacity-70 pointer-events-none" />
+        <div className="absolute inset-0 network-animation opacity-20 mix-blend-screen pointer-events-none" />
+
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-center mb-24"
+          >
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient">
+              Hành Trình Phát Triển
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Hành trình học tập và phát triển của tôi
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Mỗi bước đi là một cột mốc — đây là hành trình tôi học, sáng tạo
+              và trưởng thành cùng công nghệ.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="relative">
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary transform -translate-x-1/2 hidden md:block" />
+          {/* Timeline line */}
+          <div className="relative flex flex-col items-center">
+            <div className="absolute left-1/2 top-0 bottom-0 w-[3px] bg-gradient-to-b from-accent via-primary to-transparent blur-[1px] shadow-[0_0_10px_rgba(255,255,255,0.2)] animate-pulse" />
 
-            <div className="space-y-16">
-              {[
-                {
-                  title: "Bắt đầu học lập trình",
-                  company: "Đại học HUTECH",
-                  period: "09/2022 - 12/2022",
-                  icon: "🎓",
-                  color: "from-blue-500 to-cyan-500",
-                  side: "left",
-                  responsibilities: [
-                    "Học các ngôn ngữ lập trình cơ bản: C, C++, Java.",
-                    "Làm quen với thuật toán và cấu trúc dữ liệu.",
-                    "Tham gia các buổi workshop về lập trình.",
-                  ],
-                },
-                {
-                  title: "Dự án Web đầu tiên",
-                  company: "Đại học HUTECH",
-                  period: "03/2023 - 06/2023",
-                  icon: "🌐",
-                  color: "from-green-500 to-emerald-500",
-                  side: "right",
-                  responsibilities: [
-                    "Xây dựng website quản lý thư viện với HTML, CSS, JavaScript.",
-                    "Học cách làm việc với database MySQL.",
-                    "Áp dụng responsive design cho mobile.",
-                  ],
-                },
-                {
-                  title: "Dự án Lập trình Mạng",
-                  company: "Đại học HUTECH",
-                  period: "09/2023 - 12/2023",
-                  icon: "🔌",
-                  color: "from-orange-500 to-red-500",
-                  side: "left",
-                  responsibilities: [
-                    "Phát triển ứng dụng chat với Java Socket Programming.",
-                    "Implement multithreading để xử lý nhiều client đồng thời.",
-                    "Tìm hiểu và áp dụng các giao thức mạng (TCP/UDP).",
-                  ],
-                },
-                {
-                  title: "Thực tập sinh Frontend",
-                  company: "Hostinger",
-                  period: "06/2024 - 09/2024",
-                  icon: "💼",
-                  color: "from-purple-500 to-pink-500",
-                  side: "right",
-                  responsibilities: [
-                    "Học và áp dụng ReactJS vào xây dựng giao diện web.",
-                    "Thực hành làm việc nhóm với Git và quản lý task qua Trello.",
-                    "Tối ưu trải nghiệm người dùng dựa trên phản hồi từ mentor.",
-                  ],
-                },
-                {
-                  title: "Dự án học phần Web nâng cao",
-                  company: "Đại học HUTECH",
-                  period: "09/2024 - 12/2024",
-                  icon: "🚀",
-                  color: "from-cyan-500 to-blue-500",
-                  side: "left",
-                  responsibilities: [
-                    "Xây dựng ứng dụng web full-stack với Node.js và MongoDB.",
-                    "Implement RESTful API và WebSocket cho tính năng real-time.",
-                    "Áp dụng best practices trong tổ chức code và bảo mật.",
-                  ],
-                },
-              ].map((exp, i) => (
-                <div
+            <div className="w-full flex flex-col gap-32">
+              {timeline.map((exp, i) => (
+                <motion.div
                   key={i}
-                  className={`relative ${
-                    exp.side === "right"
-                      ? "md:ml-auto md:pl-8"
-                      : "md:mr-auto md:pr-8"
-                  } md:w-1/2`}
+                  initial={{
+                    opacity: 0,
+                    x: i % 2 === 0 ? -100 : 100,
+                    y: 60,
+                    scale: 0.95,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    scale: 1,
+                  }}
+                  transition={{
+                    duration: 0.9,
+                    ease: "easeOut",
+                    delay: i * 0.05,
+                  }}
+                  viewport={{ once: true }}
+                  className={cn(
+                    "relative flex flex-col md:flex-row items-center",
+                    i % 2 === 0 ? "md:justify-start" : "md:justify-end"
+                  )}
                 >
-                  <div
-                    className={`absolute top-8 ${
-                      exp.side === "right" ? "md:-left-4" : "md:-right-4"
-                    } left-0 md:left-auto w-8 h-8 rounded-full bg-gradient-to-br ${
-                      exp.color
-                    } flex items-center justify-center text-white font-bold text-sm shadow-lg z-10 border-4 border-background`}
+                  {/* Card */}
+                  <motion.div
+                    whileHover={{
+                      scale: 1.04,
+                      boxShadow: "0 0 40px rgba(255,255,255,0.1)",
+                    }}
+                    transition={{ type: "spring", stiffness: 160, damping: 14 }}
+                    className={cn(
+                      "relative w-full md:w-[46%] rounded-3xl bg-card/80 backdrop-blur-md border border-border/30 shadow-md hover:shadow-2xl transition-all duration-700 overflow-hidden group",
+                      i % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
+                    )}
                   >
-                    {exp.icon}
-                  </div>
-
-                  <Card
-                    className={`group hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 ${
-                      exp.side === "left" ? "md:text-right" : ""
-                    }`}
-                  >
-                    <div className="p-6">
-                      <div
-                        className={`flex items-start ${
-                          exp.side === "left"
-                            ? "md:flex-row-reverse"
-                            : "flex-row"
-                        } justify-between mb-3 gap-4`}
-                      >
-                        <div
-                          className={exp.side === "left" ? "md:text-right" : ""}
-                        >
-                          <h3 className="text-xl md:text-2xl font-bold mb-1 group-hover:text-primary transition-colors">
+                    <Card className="border-none shadow-none bg-transparent">
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-3">
+                          <h3
+                            className={`text-2xl font-bold bg-gradient-to-r ${exp.color} bg-clip-text text-transparent`}
+                          >
                             {exp.title}
                           </h3>
-                          <p className="text-base text-muted-foreground font-semibold">
-                            {exp.company}
-                          </p>
+                          <span className="text-xs bg-secondary/70 px-3 py-1 rounded-full text-muted-foreground">
+                            {exp.period}
+                          </span>
                         </div>
-                        <span className="text-xs md:text-sm text-muted-foreground bg-secondary px-3 py-1 rounded-full whitespace-nowrap">
-                          {exp.period}
-                        </span>
-                      </div>
-
-                      <div
-                        className={`space-y-2 mt-4 ${
-                          exp.side === "left" ? "md:text-right" : ""
-                        }`}
-                      >
-                        <p className="text-sm font-semibold text-muted-foreground italic">
-                          Trách nhiệm
+                        <p className="text-sm font-semibold text-muted-foreground mb-2">
+                          {exp.company}
                         </p>
-                        {exp.responsibilities.map((resp, j) => (
-                          <div
-                            key={j}
-                            className={`flex items-start gap-2 ${
-                              exp.side === "left" ? "md:flex-row-reverse" : ""
-                            }`}
-                          >
-                            <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                            <p className="text-muted-foreground text-sm">
-                              {resp}
-                            </p>
-                          </div>
-                        ))}
+                        <p className="text-muted-foreground mb-5 leading-relaxed">
+                          {exp.description}
+                        </p>
+                        <ul className="space-y-2">
+                          {exp.highlights.map((h, j) => (
+                            <li
+                              key={j}
+                              className="flex items-start gap-3 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                              <span className="w-2 h-2 mt-2 rounded-full bg-primary/80 flex-shrink-0" />
+                              {h}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
-                  </Card>
-                </div>
+                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-700" />
+                    </Card>
+                  </motion.div>
+
+                  {/* Node icon */}
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.15, 1],
+                      boxShadow: [
+                        "0 0 0 rgba(255,255,255,0)",
+                        "0 0 25px rgba(255,255,255,0.3)",
+                        "0 0 0 rgba(255,255,255,0)",
+                      ],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 3,
+                      ease: "easeInOut",
+                    }}
+                    className={cn(
+                      "absolute md:top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold text-white z-10",
+                      i % 2 === 0
+                        ? "md:left-[calc(50%-24px)]"
+                        : "md:right-[calc(50%-24px)]",
+                      `bg-gradient-to-tr ${exp.color}`
+                    )}
+                  >
+                    {exp.icon}
+                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>
+
+          {/* CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 80 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9 }}
+            className="text-center mt-40"
+          >
+            <p className="text-lg text-muted-foreground mb-8">
+              Hành trình vẫn tiếp tục — tôi luôn tìm kiếm những thử thách mới.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-primary to-accent text-white rounded-xl font-bold text-lg hover:shadow-[0_0_25px_var(--accent)] hover:scale-110 transition-all"
+            >
+              Kết nối cùng tôi
+              <ArrowRight className="w-6 h-6" />
+            </Link>
+          </motion.div>
         </div>
       </section>
     </main>

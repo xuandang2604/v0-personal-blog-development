@@ -235,7 +235,7 @@ console.log("runtime:",Date.now())`;
                   <h3 className="font-semibold mb-4">Hoặc liên hệ qua:</h3>
                   <div className="space-y-3">
                     <a
-                      href="mailto:nguyenlexuandang2004@gmail.com"
+                      href="https://mail.google.com/mail/?view=cm&to=nguyenlexuandang2004@gmail.com"
                       className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
                     >
                       <Mail className="w-5 h-5" />
@@ -360,7 +360,9 @@ console.log("runtime:",Date.now())`;
           </p>
           <div className="flex gap-4 justify-center">
             <a
-              href="mailto:nguyenlexuandang2004@gmail.com"
+              href="https://mail.google.com/mail/?view=cm&to=nguyenlexuandang2004@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-lg font-bold hover:shadow-2xl hover:shadow-primary/50 transition-all hover:scale-105"
             >
               Email Me
