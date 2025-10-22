@@ -1,13 +1,13 @@
-import { blogPosts } from "@/lib/blog-posts"
-import { notFound } from "next/navigation"
-import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react"
-import Link from "next/link"
-import { Card } from "@/components/ui/card"
+import { blogPosts } from "@/lib/blog-posts";
+import { notFound } from "next/navigation";
+import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
     slug: post.id,
-  }))
+  }));
 }
 
 const blogContent: Record<string, { content: string[] }> = {
@@ -15,7 +15,7 @@ const blogContent: Record<string, { content: string[] }> = {
     content: [
       "## Lập trình Socket trong Java: Từ cơ bản đến ứng dụng thực tế",
       "Trong hầu hết các hệ thống mạng ngày nay, lập trình socket đóng vai trò như cầu nối giữa các thiết bị và dịch vụ. Dù bạn đang xây dựng một ứng dụng chat, game nhiều người chơi hay một server IoT, việc hiểu rõ cơ chế hoạt động của socket là điều bắt buộc. Java cung cấp thư viện mạnh mẽ, trừu tượng hóa các chi tiết phức tạp của mạng, giúp bạn làm việc với TCP và UDP dễ dàng hơn nhiều.",
-      'Bài viết này trình bày toàn diện về **Java Socket Programming** — từ khái niệm cơ bản, các loại giao thức, đến ví dụ thực tiễn. Mục tiêu là giúp bạn không chỉ hiểu "làm thế nào", mà còn "tại sao" nó lại hoạt động như vậy.',
+      "Bài viết này trình bày toàn diện về **Java Socket Programming** — từ khái niệm cơ bản, các loại giao thức, đến ví dụ thực tiễn. Mục tiêu là giúp bạn không chỉ hiểu “làm thế nào”, mà còn “tại sao” nó lại hoạt động như vậy.",
 
       "---",
       "## 1. Socket là gì? Một cái nhìn nền tảng",
@@ -44,7 +44,7 @@ const blogContent: Record<string, { content: string[] }> = {
 
       "### Client Side – Gửi và nhận dữ liệu",
       '```java\nimport java.io.*;\nimport java.net.*;\n\npublic class EchoClient {\n    public static void main(String[] args) {\n        final String HOST = "localhost";\n        final int PORT = 5000;\n\n        try (Socket socket = new Socket(HOST, PORT);\n             BufferedReader console = new BufferedReader(new InputStreamReader(System.in));\n             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);\n             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {\n\n            System.out.println("Đã kết nối tới server tại " + HOST + ":" + PORT);\n            System.out.println("Nhập tin nhắn (gõ \'exit\' để thoát):");\n\n            String input;\n            while ((input = console.readLine()) != null) {\n                out.println(input);\n                String response = in.readLine();\n                System.out.println("Server phản hồi: " + response);\n                if (input.equalsIgnoreCase("exit")) break;\n            }\n        } catch (IOException e) {\n            System.err.println("Lỗi kết nối: " + e.getMessage());\n        }\n    }\n}\n```',
-      'Chương trình trên thể hiện một vòng đời kết nối TCP đầy đủ:\n1. Client khởi tạo socket tới địa chỉ IP và cổng của server.\n2. Server chấp nhận kết nối, tạo socket riêng cho client.\n3. Hai bên trao đổi dữ liệu thông qua `InputStream` và `OutputStream`.\n4. Khi client gửi "exit", cả hai bên đóng kết nối an toàn.',
+      "Chương trình trên thể hiện một vòng đời kết nối TCP đầy đủ:\n1. Client khởi tạo socket tới địa chỉ IP và cổng của server.\n2. Server chấp nhận kết nối, tạo socket riêng cho client.\n3. Hai bên trao đổi dữ liệu thông qua `InputStream` và `OutputStream`.\n4. Khi client gửi “exit”, cả hai bên đóng kết nối an toàn.",
 
       "---",
       "## 5. Quản lý tài nguyên và xử lý lỗi trong thực tế",
@@ -131,10 +131,10 @@ const blogContent: Record<string, { content: string[] }> = {
       "---",
       "## 5. Best Practices và lỗi thường gặp",
       "Khi làm việc với TCP hoặc UDP trong Java, có một số lưu ý giúp bạn tránh lỗi phổ biến:",
-      "1. **Đặt timeout hợp lý**: Với TCP, dùng `socket.setSoTimeout()` để tránh treo. Với UDP, timeout giúp phát hiện khi gói tin bị mất.\n2. **Đừng gửi dữ liệu quá lớn qua UDP**: Giới hạn kích thước datagram khoảng 64KB. Nếu lớn hơn, hãy chia nhỏ hoặc dùng TCP.\n3. **Đóng socket đúng cách**: Luôn gọi `close()` hoặc dùng `try-with-resources` để tránh ròỉỉ tài nguyên.\n4. **Đừng giả định UDP luôn nhanh hơn TCP**: Trong mạng có nhiều mất mát, việc gửi lại ở tầng ứng dụng có thể khiến UDP chậm hơn TCP.\n5. **Giám sát băng thông**: Với ứng dụng real-time, cần cân nhắc giữa tốc độ gửi dữ liệu và khả năng xử lý của mạng.",
+      "1. **Đặt timeout hợp lý**: Với TCP, dùng `socket.setSoTimeout()` để tránh treo. Với UDP, timeout giúp phát hiện khi gói tin bị mất.\n2. **Đừng gửi dữ liệu quá lớn qua UDP**: Giới hạn kích thước datagram khoảng 64KB. Nếu lớn hơn, hãy chia nhỏ hoặc dùng TCP.\n3. **Đóng socket đúng cách**: Luôn gọi `close()` hoặc dùng `try-with-resources` để tránh rò rỉ tài nguyên.\n4. **Đừng giả định UDP luôn nhanh hơn TCP**: Trong mạng có nhiều mất mát, việc gửi lại ở tầng ứng dụng có thể khiến UDP chậm hơn TCP.\n5. **Giám sát băng thông**: Với ứng dụng real-time, cần cân nhắc giữa tốc độ gửi dữ liệu và khả năng xử lý của mạng.",
 
       "---",
-      '## 6. Kết luận: Không có giao thức nào "tốt hơn" – chỉ có giao thức phù hợp hơn',
+      "## 6. Kết luận: Không có giao thức nào “tốt hơn” – chỉ có giao thức phù hợp hơn",
       "TCP và UDP đều có vị trí riêng trong lập trình mạng. Lựa chọn phụ thuộc vào đặc điểm ứng dụng:",
       "- Nếu bạn cần **độ chính xác và toàn vẹn dữ liệu**, hãy chọn **TCP**.\n- Nếu bạn cần **tốc độ, phản hồi nhanh và độ trễ thấp**, hãy chọn **UDP**.",
       "Trong nhiều hệ thống phức tạp, việc kết hợp cả hai giao thức là lựa chọn tối ưu. Ví dụ, game online có thể dùng UDP cho dữ liệu vị trí (real-time) và TCP cho chat hoặc cập nhật cấu hình.",
@@ -263,7 +263,7 @@ const blogContent: Record<string, { content: string[] }> = {
       "### Minh họa cơ bản:",
       "```text\n[Client] --> gửi yêu cầu đến Server\n[Server Thread]\n   ├─> Ghi nhận yêu cầu, giao cho hệ điều hành xử lý I/O\n   ├─> Tiếp tục nhận yêu cầu khác (không chặn)\n   └─> Khi I/O hoàn tất → callback được kích hoạt\n```",
       "### Mô hình này mang lại 3 lợi ích chính:",
-      "1.  **Hiệu suất cao** – Một luồng duy nhất có thể quản lý hàng nghìn kết nối.\n2.  **Tiết kiệm tài nguyên** – Không cần tạo luồng riêng cho mỗi client.\n3.  **Phù hợp cho ứng dụng thời gian thực** – Dữ liệu được xử lý ngay khi sẵn sàng.",
+      "1. **Hiệu suất cao** – Một luồng duy nhất có thể quản lý hàng nghìn kết nối.\n2. **Tiết kiệm tài nguyên** – Không cần tạo luồng riêng cho mỗi client.\n3. **Phù hợp cho ứng dụng thời gian thực** – Dữ liệu được xử lý ngay khi sẵn sàng.",
       "---",
       "## 2. Xây dựng server TCP đầu tiên với module `net`",
       "Module `net` trong Node.js cung cấp API cấp thấp để tạo server TCP và client socket. Đây là nền tảng cho các module cấp cao hơn như `http`, `https`, hay `ws` (WebSocket).",
@@ -360,7 +360,7 @@ const blogContent: Record<string, { content: string[] }> = {
   },
   "socketio-nodejs": {
     content: [
-      "Bạn đã bao giờ tự hỏi vì sao các ứng dụng như Messenger, Slack, hay TradingView có thể cập nhật dữ liệu ngay lập tức mà không cần reload lại trang? 🤔",
+      "Bạn đã bao giờ tự hỏi vì sao các ứng dụng như Messenger, Slack, hay TradingView có thể cập nhật dữ liệu ngay tức thì mà không cần reload lại trang? 🤔",
       "Câu trả lời không phải là HTTP, mà là **WebSocket** – một giao thức cho phép **truyền dữ liệu hai chiều (bi-directional)** giữa client và server trong thời gian thực.",
       "Nhưng nếu WebSocket là trái tim, thì **Socket.IO** chính là bộ não điều khiển — nó biến các gói tin thô của WebSocket thành một hệ thống giao tiếp mạnh mẽ, có khả năng tự phục hồi, mở rộng và tổ chức theo sự kiện.",
       "---",
@@ -404,27 +404,34 @@ const blogContent: Record<string, { content: string[] }> = {
       "✨ Hãy thử ngay hôm nay — vì thế giới web thời gian thực đang chờ bạn chạm tới! 🌍",
     ],
   },
-}
+};
 
 export default async function BlogPostPage({
   params,
 }: {
-  params: { slug: string } | Promise<{ slug: string }>
+  params: { slug: string } | Promise<{ slug: string }>;
 }) {
   // await params per Next.js dynamic API requirement
-  const { slug } = await params
+  const { slug } = await params;
+  const normalizedSlug = (
+    typeof slug === "string" ? slug : String(slug)
+  ).trim();
 
-  const normalizedSlug = slug.trim()
-
-  const post = blogPosts.find((p) => p.id === normalizedSlug)
-
+  const post = blogPosts.find((p) => p.id === normalizedSlug);
   if (!post) {
-    notFound()
+    notFound();
   }
 
-  const content = blogContent[normalizedSlug]
+  const content = blogContent[normalizedSlug];
+  if (!content) {
+    // missing article content — avoid runtime error during prerender
+    console.warn(`Missing blogContent for slug: "${normalizedSlug}"`);
+    notFound();
+  }
 
-  const relatedPosts = blogPosts.filter((p) => p.category === post.category && p.id !== post.id).slice(0, 3)
+  const relatedPosts = blogPosts
+    .filter((p) => p.category === post.category && p.id !== post.id)
+    .slice(0, 3);
 
   return (
     <main className="min-h-screen bg-background">
@@ -443,14 +450,18 @@ export default async function BlogPostPage({
             <div className="flex items-center gap-3 mb-6">
               <span
                 className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                  post.category === "Java" ? "bg-primary/10 text-primary" : "bg-accent/10 text-accent"
+                  post.category === "Java"
+                    ? "bg-primary/10 text-primary"
+                    : "bg-accent/10 text-accent"
                 }`}
               >
                 {post.category}
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">{post.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance leading-tight">
+              {post.title}
+            </h1>
 
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-6 text-muted-foreground">
@@ -481,62 +492,115 @@ export default async function BlogPostPage({
               {content.content.map((paragraph, index) => {
                 if (paragraph.startsWith("## ")) {
                   return (
-                    <h2 key={index} className="text-3xl font-bold mt-12 mb-6 text-foreground first:mt-0">
+                    <h2
+                      key={index}
+                      className="text-3xl font-bold mt-12 mb-6 text-foreground first:mt-0"
+                    >
                       {paragraph.replace("## ", "")}
                     </h2>
-                  )
+                  );
                 } else if (paragraph.startsWith("### ")) {
                   return (
-                    <h3 key={index} className="text-2xl font-semibold mt-8 mb-4 text-foreground">
+                    <h3
+                      key={index}
+                      className="text-2xl font-semibold mt-8 mb-4 text-foreground"
+                    >
                       {paragraph.replace("### ", "")}
                     </h3>
-                  )
+                  );
                 } else if (paragraph.includes("```")) {
-                  const code = paragraph.split("```")[1]
+                  const code = paragraph.split("```")[1];
                   return (
-                    <pre key={index} className="bg-muted p-6 rounded-lg overflow-x-auto my-6 border border-border">
+                    <pre
+                      key={index}
+                      className="bg-muted p-6 rounded-lg overflow-x-auto my-6 border border-border"
+                    >
                       <code className="text-sm font-mono">{code}</code>
                     </pre>
-                  )
+                  );
+                } else if (
+                  paragraph.startsWith("**") ||
+                  paragraph.includes("\n-")
+                ) {
+                  return (
+                    <div
+                      key={index}
+                      className="my-6 text-foreground leading-relaxed whitespace-pre-line text-lg"
+                    >
+                      {paragraph}
+                    </div>
+                  );
                 } else {
                   return (
-                    <p key={index} className="text-lg leading-relaxed mb-4">
+                    <p
+                      key={index}
+                      className="mb-6 text-foreground leading-relaxed text-lg"
+                    >
                       {paragraph}
                     </p>
-                  )
+                  );
                 }
               })}
             </div>
           </Card>
-
-          {/* Related Posts */}
-          {relatedPosts.length > 0 && (
-            <section className="mt-16">
-              <h2 className="text-3xl font-bold mb-8 text-foreground">Bài viết liên quan</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {relatedPosts.map((post) => (
-                  <Card key={post.id} className="p-6 hover:shadow-lg transition-shadow">
-                    <Link href={`/blog/${post.id}`} className="block">
-                      <h3 className="text-xl font-semibold mb-3 text-primary hover:underline">{post.title}</h3>
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{post.description}</p>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(post.date).toLocaleDateString("vi-VN")}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {post.readTime}
-                        </div>
-                      </div>
-                    </Link>
-                  </Card>
-                ))}
-              </div>
-            </section>
-          )}
         </div>
       </article>
+
+      {/* Related Posts */}
+      {relatedPosts.length > 0 && (
+        <section className="py-16 bg-secondary/30">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold mb-8 text-center">
+              Related Articles
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <Link key={relatedPost.id} href={`/blog/${relatedPost.id}`}>
+                  <Card className="group relative overflow-hidden h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="relative p-6">
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 ${
+                          relatedPost.category === "Java"
+                            ? "bg-primary/10 text-primary"
+                            : "bg-accent/10 text-accent"
+                        }`}
+                      >
+                        {relatedPost.category}
+                      </span>
+                      <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                        {relatedPost.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {relatedPost.excerpt}
+                      </p>
+                    </div>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            Xem Thêm Bài Viết
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8">
+            Khám phá thêm các kiến thức lập trình mạng với Java và JavaScript.
+          </p>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
+          >
+            Xem Tất Cả
+            <ArrowLeft className="w-5 h-5 rotate-180" />
+          </Link>
+        </div>
+      </section>
     </main>
-  )
+  );
 }

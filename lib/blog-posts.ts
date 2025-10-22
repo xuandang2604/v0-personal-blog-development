@@ -49,7 +49,7 @@ export const blogPosts: BlogPost[] = [
     title: "Java NIO cho lập trình mạng hiệu suất cao",
     excerpt:
       "Tìm hiểu về Java NIO (Non-blocking I/O) và cách sử dụng để xây dựng ứng dụng mạng có hiệu suất cao.",
-    date: "22025-10-20",
+    date: "2025-10-20",
     category: "Java",
     readTime: "15 phút",
   },
