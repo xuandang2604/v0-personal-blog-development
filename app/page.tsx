@@ -352,7 +352,7 @@ export default function AboutPage() {
         <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid lg:grid-cols-10 gap-12 items-center">
             <div className="lg:col-span-4 space-y-8 animate-fade-in-up">
-              <ThreeDCard avatarSrc="/avatar.png" className="inline-block" />
+              <ThreeDCard avatarSrc="/avatar1.png" className="inline-block" />
 
               <HeroDecryptingText />
               <div className="flex gap-4">
